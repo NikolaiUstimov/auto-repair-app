@@ -1,0 +1,54 @@
+@use 'mixins' as m;
+@use 'variables' as v;
+
+.burger-button {
+  @include m.flex-center;
+  @include m.square(44px);
+
+  padding: 0;
+  background-color: v.$color-primary;
+  box-shadow: 0 6px 14px v.$color-bg-btn;
+  border: none;
+  border-radius: 6px;
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: v.$color-primary-800;
+    border-color: transparent;
+  }
+
+  &.is-active {
+    .burger-button__line {
+      stroke-dasharray: 90 207;
+      stroke-dashoffset: -134;
+
+      &--2 {
+        stroke-dasharray: 1 60;
+        stroke-dashoffset: -30;
+      }
+    }
+  }
+
+  &:not(.is-active) {
+    .burger-button__line--3 {
+      stroke-dasharray: 30 207;
+      stroke-dashoffset: -30;
+    }
+  }
+
+  &__line {
+    transition:
+      stroke-dasharray var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1),
+      stroke-dashoffset var(--transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
+    fill: none;
+    stroke: v.$color-white;
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 60 207;
+
+    &--2 {
+      stroke-dasharray: 60 60;
+    }
+  }
+}

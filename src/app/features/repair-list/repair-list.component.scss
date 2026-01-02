@@ -1,0 +1,60 @@
+@use 'variables' as v;
+
+.repair-list {
+  padding: 20px;
+
+  &__title {
+    font-size: v.$font-size-big;
+    color: v.$color-blue;
+    margin-bottom: 20px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  &__box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  &__box-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 16px;
+    width: 260px;
+    max-width: 340px;
+    background: v.$gradient;
+    border-radius: 12px;
+    padding: 16px;
+    color: v.$color-white;
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+
+  &__box-item-crud {
+    position: absolute;
+    padding: 10px;
+    top: 0;
+    right: 0;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      fill: white;
+    }
+  }
+}

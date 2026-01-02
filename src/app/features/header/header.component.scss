@@ -1,0 +1,16 @@
+@use "variables" as v;
+
+.header {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: v.$color-secondary;
+  padding: 10px 15px;
+
+  .logo svg,
+  .navigate svg {
+    width: 45px;
+    height: 45px;
+  }
+}

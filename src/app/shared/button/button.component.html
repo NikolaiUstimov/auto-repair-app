@@ -1,0 +1,30 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+
+@if (routerLink) {
+  <a
+    [routerLink]="routerLink"
+    [ngClass]="['btn', variant, size]"
+    [attr.target]="target"
+  >
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </a>
+} @else if (href) {
+  <a
+    [href]="href"
+    [ngClass]="['btn', variant, size]"
+    [attr.target]="target"
+  >
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </a>
+} @else {
+  <button
+    type="button"
+    [disabled]="disabled"
+    [ngClass]="['btn', variant, size]"
+    (click)="onClick($event)"
+  >
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </button>
+}

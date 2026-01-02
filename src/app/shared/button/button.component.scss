@@ -1,0 +1,60 @@
+@use "variables" as v;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &.primary {
+    background: v.$color-primary;
+    color: v.$color-white;
+
+    &:hover {
+      background: v.$color-primary-800;
+    }
+  }
+
+  &.secondary {
+    background: v.$color-secondary;
+    color: v.$color-white;
+
+    &:hover {
+      background: v.$color-gray;
+    }
+  }
+
+  &.danger {
+    background: v.$color-danger;
+    color: v.$color-white;
+
+    &:hover {
+      background: v.$color-danger-800;
+    }
+  }
+
+  &.small {
+    padding: v.$padding-btn-small;
+    font-size: v.$font-size-small;
+  }
+
+  &.medium {
+    padding: v.$padding-btn-medium;
+    font-size: v.$font-size-base;
+  }
+
+  &.large {
+    padding: v.$padding-btn-large;
+    font-size: v.$font-size-large;
+  }
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -1,0 +1,94 @@
+@use "variables" as v;
+
+.dashboard {
+  min-height: 100vh;
+  background: linear-gradient(180deg, v.$color-accent 0%, v.$color-white 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1rem;
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: v.$color-primary;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 3rem;
+  }
+
+  &__button {
+    background-color: v.$color-primary;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 0.9rem 2rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 14px v.$color-bg-btn;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: v.$color-secondary;
+      box-shadow: 0 8px 18px rgba(90, 79, 220, 0.4);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 0 3px 8px rgba(90, 79, 220, 0.2);
+    }
+  }
+}
+
+// 📊 Карточки статистики
+.stat-card {
+  background-color: v.$color-white;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 1.8rem 1.2rem;
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(90, 79, 220, 0.25);
+  }
+
+  &__title {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+  }
+
+  &__value {
+    font-size: 2rem;
+    font-weight: 600;
+    color: v.$color-primary;
+  }
+}
+
+// 📱 Адаптив
+@media (max-width: 600px) {
+  .dashboard {
+    padding: 2rem 1rem;
+
+    &__title {
+      font-size: 1.6rem;
+    }
+
+    &__button {
+      width: 100%;
+      font-size: 1rem;
+    }
+  }
+}

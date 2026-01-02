@@ -1,0 +1,40 @@
+<section class="repair-list">
+  <h2 class="repair-list__title">Мои записи</h2>
+  <form
+    class="repair-list__form"
+    [formGroup]="repairForm"
+    (ngSubmit)="addNewRepair()"
+    (keyup.enter)="addNewRepair()"
+  >
+    <app-field formControlName="nameRepair" id="1" label="Тип работ" />
+    <app-field formControlName="auto" id="2" label="Авто" />
+    <app-field formControlName="price" id="3" type="number" label="Стоимость" />
+    <app-button
+      type="submit"
+      variant="primary"
+      size="medium"
+      [disabled]="repairForm.invalid"
+      (action)="addNewRepair()"
+    >
+      Создать запись
+    </app-button>
+  </form>
+  <ul class="repair-list__box">
+    @if (statisticRepair.dataRepair().length !== 0 ) {
+      @for (repair of statisticRepair.dataRepair(); track repair.id) {
+        <li class="repair-list__box-item">
+          <p>{{repair.number}}</p>
+          <p>{{repair.nameRepair}}</p>
+          <p>{{repair.auto}}</p>
+          <p>{{repair.price}}</p>
+          <p>{{repair.createdAt}}</p>
+          <figure class="repair-list__box-item-crud" title="Изменить">
+            <svg icon="settings"></svg>
+          </figure>
+        </li>
+      }
+    } @else {
+      <div>Записей пока нет!</div>
+    }
+  </ul>
+</section>

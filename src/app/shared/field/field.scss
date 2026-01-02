@@ -1,0 +1,31 @@
+@use 'variables' as v;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+
+  &__label {
+    font-size: v.$font-size-small;
+    color: v.$color-text;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 8px 12px;
+    border: v.$border;
+    border-radius: v.$border-radius-s;
+
+    &::placeholder {
+      font-size: v.$font-size-base;
+      color: v.$color-text;
+    }
+
+    &:focus-visible {
+      outline: 1px solid v.$color-secondary;
+      -webkit-box-shadow: 0 0 4px 2px v.$color-secondary;
+      -moz-box-shadow: 0 0 4px 2px v.$color-secondary;
+      box-shadow: 0 0 4px 2px v.$color-secondary;
+    }
+  }
+}

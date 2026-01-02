@@ -1,0 +1,15 @@
+<div class="field">
+  <label
+    [for]="id()"
+    class="field__label"
+  >
+    {{label()}}
+  </label>
+  <input
+    class="field__input"
+    [id]="id()"
+    [type]="type()"
+    [value]="value()"
+    (input)="handleInput($event)"
+  />
+</div>
