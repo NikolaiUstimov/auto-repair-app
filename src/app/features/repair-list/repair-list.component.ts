@@ -3,16 +3,16 @@ import {
   ChangeDetectorRef,
   Component,
   inject
-} from '@angular/core'
-import {Field} from '../../shared/field/field'
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms'
-import {ButtonComponent} from '../../shared/button/button.component'
-import {DateUtils} from '../../core/utils/date-utils'
-import {RepairType} from '../../types/repair-type'
-import {SvgIconComponent} from '../../shared/svg-icon/svg-icon.component'
+} from '@angular/core';
+import {Field} from '../../shared/field/field';
+import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ButtonComponent} from '../../shared/button/button.component';
+import {DateUtils} from '../../core/utils/date-utils';
+import {RepairType} from '../../types/repair-type';
+import {SvgIconComponent} from '../../shared/svg-icon/svg-icon.component';
 import {
   StatisticRepairService
-} from '../../core/services/statistic-repair.service'
+} from '../../core/services/statistic-repair.service';
 
 @Component({
   selector: 'app-repair-list',
@@ -33,7 +33,7 @@ export class RepairListComponent {
   statisticRepair = inject(StatisticRepairService);
 
   constructor() {
-    this.cdr.markForCheck()
+    this.cdr.markForCheck();
   }
 
   repairForm = this.#fb.group({
@@ -56,7 +56,7 @@ export class RepairListComponent {
       id: crypto?.randomUUID() ?? Date.now().toString(),
       ...this.repairForm.value,
       createdAt: DateUtils.formatDate(currentDate)
-    }
+    };
 
     this.statisticRepair.addRepair(newRecord);
 

@@ -1,4 +1,4 @@
-export type RepairType = {
+export interface RepairType {
   number: number;
   id?: string,
   createdAt: string;

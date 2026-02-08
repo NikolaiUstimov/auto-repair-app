@@ -1,8 +1,8 @@
-import {Component, signal} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
-import {HeaderComponent} from './features/header/header.component';
-import {SwUpdate, VersionReadyEvent} from '@angular/service-worker';
-import {filter} from 'rxjs';
+import {Component, signal} from '@angular/core'
+import {RouterOutlet} from '@angular/router'
+import {HeaderComponent} from './features/header/header.component'
+import {SwUpdate, VersionReadyEvent} from '@angular/service-worker'
+import {filter} from 'rxjs'
 
 @Component({
   selector: 'app-root',
@@ -23,6 +23,7 @@ export class App {
         if (confirm('New version available. Load New Version?')) {
           swUpdate.activateUpdate().then(() => window.location.reload());
         }
-      })
+        console.log(event);
+      });
   }
 }

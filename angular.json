@@ -12,13 +12,27 @@
           "style": "scss",
           "skipTests": true
         },
-        "@schematics/angular:directive": { "type": "directive" },
-        "@schematics/angular:service": { "type": "service" },
-        "@schematics/angular:guard": { "typeSeparator": "." },
-        "@schematics/angular:interceptor": { "typeSeparator": "." },
-        "@schematics/angular:module": { "typeSeparator": "." },
-        "@schematics/angular:pipe": { "typeSeparator": "." },
-        "@schematics/angular:resolver": { "typeSeparator": "." }
+        "@schematics/angular:directive": {
+          "type": "directive"
+        },
+        "@schematics/angular:service": {
+          "type": "service"
+        },
+        "@schematics/angular:guard": {
+          "typeSeparator": "."
+        },
+        "@schematics/angular:interceptor": {
+          "typeSeparator": "."
+        },
+        "@schematics/angular:module": {
+          "typeSeparator": "."
+        },
+        "@schematics/angular:pipe": {
+          "typeSeparator": "."
+        },
+        "@schematics/angular:resolver": {
+          "typeSeparator": "."
+        }
       },
       "root": "",
       "sourceRoot": "src",
@@ -40,7 +54,9 @@
               "src/styles.scss"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": [
+                "src/styles"
+              ]
             }
           },
           "configurations": {
@@ -98,11 +114,23 @@
               "src/styles.scss"
             ]
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   }
 }

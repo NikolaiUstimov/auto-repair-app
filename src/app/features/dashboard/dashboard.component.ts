@@ -18,7 +18,7 @@ export class DashboardComponent {
   statisticRepair = inject(StatisticRepairService);
 
   totalCars = this.statisticRepair.dataRepair().length;
-  totalRepairs = this.statisticRepair.dataRepair().length
+  totalRepairs = this.statisticRepair.dataRepair().length;
   totalCost: Signal<number> = computed(() => {
     return this.statisticRepair.dataRepair().reduce((acc, data) => acc + (Number(data.price ? data.price : 0)), 0);
   });

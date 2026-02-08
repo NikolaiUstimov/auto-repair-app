@@ -1,7 +1,7 @@
 import {RepairType} from '../../types/repair-type';
 
 export class LocalStorageUtils {
-  static localStorageRepairKey: string = "repairList";
+  static localStorageRepairKey = "repairList";
   static repairs = localStorage.getItem(this.localStorageRepairKey);
 
   static localStorageSetData(value: RepairType[]) {
@@ -20,7 +20,7 @@ export class LocalStorageUtils {
       id: crypto?.randomUUID() ?? Date.now().toString(),
       ...formValue,
       createdAt: date
-    }
+    };
 
     const updatedRepairsData: RepairType[] = [...repairsData, newRecord];
     localStorage.setItem(this.localStorageRepairKey, JSON.stringify(updatedRepairsData));
