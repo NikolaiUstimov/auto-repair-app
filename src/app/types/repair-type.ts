@@ -1,8 +1,23 @@
-export interface RepairType {
+import {DBSchema} from 'idb'
+
+export type RepairType = {
   number: number;
-  id?: string,
+  id: string,
   createdAt: string;
-  nameRepair?: string | null | undefined;
-  auto?: string | null | undefined;
-  price?: number | null | undefined;
+  nameRepair: string;
+  auto: string;
+  price: number;
+}
+
+export interface RepairDB extends DBSchema {
+  repairs: {
+    key: string;
+    value: RepairType;
+    indexes: {
+      'by-number': number;
+      'by-date': string;
+      'by-auto': string;
+      'by-price': number;
+    }
+  }
 }

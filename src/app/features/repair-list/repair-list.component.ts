@@ -3,16 +3,17 @@ import {
   ChangeDetectorRef,
   Component,
   inject
-} from '@angular/core';
-import {Field} from '../../shared/field/field';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ButtonComponent} from '../../shared/button/button.component';
-import {DateUtils} from '../../core/utils/date-utils';
-import {RepairType} from '../../types/repair-type';
-import {SvgIconComponent} from '../../shared/svg-icon/svg-icon.component';
+} from '@angular/core'
+import {Field} from '../../shared/field/field'
+import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms'
+import {ButtonComponent} from '../../shared/button/button.component'
+import {DateUtils} from '../../core/utils/date-utils'
+import {RepairType} from '../../types/repair-type'
+import {SvgIconComponent} from '../../shared/svg-icon/svg-icon.component'
 import {
   StatisticRepairService
-} from '../../core/services/statistic-repair.service';
+} from '../../core/services/statistic-repair.service'
+import {RepairFormValue} from '../../types/form-value-type'
 
 @Component({
   selector: 'app-repair-list',
@@ -36,10 +37,10 @@ export class RepairListComponent {
     this.cdr.markForCheck();
   }
 
-  repairForm = this.#fb.group({
-    nameRepair: ['', Validators.required],
-    auto: ['', Validators.required],
-    price: [],
+  repairForm = this.#fb.nonNullable.group({
+    nameRepair: this.#fb.nonNullable.control('', Validators.required),
+    auto: this.#fb.nonNullable.control('', Validators.required),
+    price: this.#fb.nonNullable.control(0, Validators.required),
   });
 
   addNewRepair() {
@@ -51,11 +52,13 @@ export class RepairListComponent {
       ? listData[listData.length - 1].number + 1
       : 1;
 
+    const id = crypto?.randomUUID() ?? Date.now().toString();
+    const formValue: RepairFormValue = this.repairForm.getRawValue();
     const newRecord: RepairType = {
       number: nextNumber,
-      id: crypto?.randomUUID() ?? Date.now().toString(),
-      ...this.repairForm.value,
-      createdAt: DateUtils.formatDate(currentDate)
+      id: id,
+      createdAt: DateUtils.formatDate(currentDate),
+      ...formValue,
     };
 
     this.statisticRepair.addRepair(newRecord);

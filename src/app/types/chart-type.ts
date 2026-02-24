@@ -1,4 +1,4 @@
-export interface ChartType {
+export type ChartType = {
   month: string,
   totalAmount: number,
   carsCount: number,

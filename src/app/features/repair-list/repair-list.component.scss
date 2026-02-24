@@ -40,6 +40,10 @@
     transition: 0.3s;
     cursor: pointer;
 
+    p {
+      text-align: center;
+    }
+
     &:hover {
       transform: scale(1.03);
     }
