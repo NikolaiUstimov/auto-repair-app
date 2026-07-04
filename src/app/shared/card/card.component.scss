@@ -1,0 +1,40 @@
+@use 'variables' as v;
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 16px;
+  width: 260px;
+  max-width: 340px;
+  background: v.$gradient;
+  border-radius: 12px;
+  padding: 16px;
+  color: v.$color-white;
+  transition: 0.4s;
+  cursor: pointer;
+
+  p {
+    text-align: center;
+  }
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.card__crud {
+  position: absolute;
+  padding: 10px;
+  top: 0;
+  right: 0;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+  }
+}

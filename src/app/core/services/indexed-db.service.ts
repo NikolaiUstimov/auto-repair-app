@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core'
-import {RepairDB, RepairType} from '../../types/repair-type'
-import {IDBPDatabase, openDB} from 'idb'
+import { Injectable } from '@angular/core';
+import { RepairDB, RepairType } from '../../types/repair-type';
+import { IDBPDatabase, openDB } from 'idb';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class IndexedDBService {
   private dbPromise: Promise<IDBPDatabase<RepairDB>>;
@@ -25,14 +25,14 @@ export class IndexedDBService {
 
         const store = db.createObjectStore('repairs' as const, {
           keyPath: 'id',
-          autoIncrement: false
+          autoIncrement: false,
         });
 
         //Создание индексов для реализации поиска
-        store.createIndex('by-number', 'number', {unique: false});
-        store.createIndex('by-date', 'createdAt', {unique: false});
-        store.createIndex('by-auto', 'auto', {unique: false});
-        store.createIndex('by-price', 'price', {unique: false});
+        store.createIndex('by-number', 'number', { unique: false });
+        store.createIndex('by-date', 'createdAt', { unique: false });
+        store.createIndex('by-auto', 'auto', { unique: false });
+        store.createIndex('by-price', 'price', { unique: false });
       },
       blocked() {
         console.warn('Подключение к базе данных заблокировано');
@@ -42,7 +42,7 @@ export class IndexedDBService {
       },
       terminated() {
         console.warn('Подключение к базе данных прервано');
-      }
+      },
     });
   }
 
@@ -50,10 +50,10 @@ export class IndexedDBService {
   async addRepair(repair: RepairType): Promise<string> {
     try {
       const db = await this.dbPromise;
-      const id = await  db.put(this.STORE_NAME, repair);
+      const id = await db.put(this.STORE_NAME, repair);
       return id as string;
     } catch (error) {
-      console.error('Ошибка при сохраниении записи', error);
+      console.error('Ошибка при сохранении записи', error);
       throw error;
     }
   }
@@ -92,7 +92,7 @@ export class IndexedDBService {
   }
 
   //Удаление всех записей БД
-  async deleteAllRepairs(id: string): Promise<void> {
+  async deleteAllRepairs(): Promise<void> {
     try {
       const db = await this.dbPromise;
       await db.clear(this.STORE_NAME);

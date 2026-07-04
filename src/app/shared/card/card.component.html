@@ -1,0 +1,13 @@
+@for (repair of repairList; track repair.id) {
+  <li class="card">
+    <p>{{repair.number}}</p>
+    <p>{{repair.nameRepair}}</p>
+    <p>{{repair.auto}}</p>
+    <p>{{repair.licenseNumber}}</p>
+    <p>{{repair.price | currency: 'RUB' : 'symbol' : '1.1-1'}}</p>
+    <p>{{repair.createdAt}}</p>
+    <button class="card__crud" title="Изменить">
+      <svg icon="settings"></svg>
+    </button>
+  </li>
+}

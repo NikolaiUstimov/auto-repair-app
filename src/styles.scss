@@ -16,3 +16,10 @@ body {
   font-family: "Arial", sans-serif;
   font-size: v.$font-size-base;
 }
+
+button {
+  outline: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
