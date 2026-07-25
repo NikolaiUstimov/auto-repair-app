@@ -6,10 +6,10 @@
     (ngSubmit)="addNewRepair()"
     (keyup.enter)="addNewRepair()"
   >
-    <app-field formControlName="nameRepair" id="1" label="Тип работ" />
-    <app-field formControlName="auto" id="2" label="Авто" />
-    <app-field formControlName="licenseNumber" id="3" label="Госномер" />
-    <app-field formControlName="price" id="4" type="number" label="Стоимость" />
+    <app-field formControlName="nameRepair" id="nameRepair" label="Тип работ" />
+    <app-field formControlName="auto" id="auto" label="Авто" />
+    <app-field formControlName="licenseNumber" id="licenseNumber" label="Госномер" />
+    <app-field formControlName="price" id="price" type="number" label="Стоимость" />
     <app-button
       type="submit"
       variant="primary"
@@ -22,7 +22,7 @@
   </form>
   <ul class="repair-list__box">
     @if (statisticRepair.dataRepair().length !== 0 ) {
-      <app-card [repairList]="statisticRepair.dataRepair()" />
+      <app-card class="repair-list__box" [repairList]="statisticRepair.dataRepair()" />
     } @else {
       <div>Записей пока нет!</div>
     }

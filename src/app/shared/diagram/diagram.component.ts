@@ -1,32 +1,18 @@
-import {Component, computed, inject} from '@angular/core'
-import {
-  StatisticRepairService
-} from '../../core/services/statistic-repair.service'
-import {NgxEchartsDirective, provideEchartsCore} from 'ngx-echarts'
-import type {EChartsCoreOption} from 'echarts/core'
-import * as echarts from 'echarts/core'
-import {LineChart} from 'echarts/charts'
-import {
-  GridComponent,
-  LegendComponent,
-  TooltipComponent
-} from 'echarts/components'
-import {CanvasRenderer} from 'echarts/renderers'
+import { Component, computed, inject } from '@angular/core';
+import { StatisticRepairService } from '../../core/services/statistic-repair.service';
+import { NgxEchartsDirective, provideEchartsCore } from 'ngx-echarts';
+import type { EChartsCoreOption } from 'echarts/core';
+import * as echarts from 'echarts/core';
+import { LineChart } from 'echarts/charts';
+import { GridComponent, LegendComponent, TooltipComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
 
-echarts.use([
-  LineChart,
-  GridComponent,
-  TooltipComponent,
-  LegendComponent,
-  CanvasRenderer
-]);
+echarts.use([LineChart, GridComponent, TooltipComponent, LegendComponent, CanvasRenderer]);
 
 @Component({
   selector: 'app-diagram',
-  imports: [
-    NgxEchartsDirective
-  ],
-  providers: [provideEchartsCore({echarts})],
+  imports: [NgxEchartsDirective],
+  providers: [provideEchartsCore({ echarts })],
   standalone: true,
   templateUrl: './diagram.component.html',
   styleUrl: './diagram.component.scss',
@@ -44,10 +30,9 @@ export class DiagramComponent {
       const year = yearTime.split(' ')[0];
 
       const key = `${month}.${year}`;
-      console.log(key)
 
       if (!groupedData[key]) {
-        groupedData[key] = {count: 0, total: 0};
+        groupedData[key] = { count: 0, total: 0 };
       }
 
       groupedData[key].count++;
@@ -55,29 +40,29 @@ export class DiagramComponent {
     }
 
     const sortedKeys = Object.keys(groupedData).sort(
-      (a, b) => new Date(`01.${a}`).getTime() - new Date(`01.${b}`).getTime()
+      (a, b) => new Date(`01.${a}`).getTime() - new Date(`01.${b}`).getTime(),
     );
 
-    return sortedKeys.map(key => ({
+    return sortedKeys.map((key) => ({
       month: key,
       count: groupedData[key].count,
-      total: groupedData[key].total
+      total: groupedData[key].total,
     }));
-  })
+  });
 
   chartOptions = computed<EChartsCoreOption>(() => {
     const data = this.monthlyStats();
 
     return {
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
       },
       legend: {
         data: ['Количество авто', 'Общая сумма'],
       },
       xAxis: {
         type: 'category',
-        data: data.map(d => d.month),
+        data: data.map((d) => d.month),
       },
       yAxis: [
         {
@@ -95,7 +80,7 @@ export class DiagramComponent {
           type: 'line',
           smooth: true,
           areaStyle: {},
-          data: data.map(d => d.count),
+          data: data.map((d) => d.count),
         },
         {
           name: 'Общая сумма',
@@ -104,7 +89,7 @@ export class DiagramComponent {
           areaStyle: {
             opacity: 0.3,
           },
-          data: data.map(d => d.total),
+          data: data.map((d) => d.total),
         },
       ],
     };

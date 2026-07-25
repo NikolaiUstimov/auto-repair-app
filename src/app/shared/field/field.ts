@@ -1,7 +1,7 @@
-import {Component, forwardRef, input, signal} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import { Component, forwardRef, input, signal } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-type value = string | number | null;
+type FieldValue = string | number | null;
 
 @Component({
   selector: 'app-field',
@@ -12,29 +12,34 @@ type value = string | number | null;
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => Field),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class Field implements ControlValueAccessor {
   label = input<string | '' | null>(null);
-  type = input<'text'| 'number' | 'search' | 'radio' | 'checkbox'>('text');
+  type = input<'text' | 'number' | 'search'>('text');
   id = input<string | null>(null);
 
-  value = signal<value>('');
+  value = signal<FieldValue>('');
 
-  private onChange = (value: value) => {};
-  private onTouched = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private onChange = (value: FieldValue) => {
+    /* empty */
+  };
+  private onTouched = () => {
+    /* empty */
+  };
 
-  writeValue(value: any): void {
+  writeValue(value: FieldValue): void {
     this.value.set(value);
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: FieldValue) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 

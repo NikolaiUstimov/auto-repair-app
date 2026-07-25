@@ -6,7 +6,7 @@ import { IDBPDatabase, openDB } from 'idb';
   providedIn: 'root',
 })
 export class IndexedDBService {
-  private dbPromise: Promise<IDBPDatabase<RepairDB>>;
+  private readonly dbPromise: Promise<IDBPDatabase<RepairDB>>;
   private readonly DB_NAME = 'repair-db';
   private readonly STORE_NAME = 'repairs';
   private readonly DB_VERSION = 1;

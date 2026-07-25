@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Field } from '../../shared/field/field';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonComponent } from '../../shared/button/button.component';
@@ -16,13 +16,8 @@ import { CardComponent } from '../../shared/card/card.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RepairListComponent {
-  cdr = inject(ChangeDetectorRef);
   #fb = inject(FormBuilder);
   statisticRepair = inject(StatisticRepairService);
-
-  constructor() {
-    this.cdr.markForCheck();
-  }
 
   repairForm = this.#fb.nonNullable.group({
     nameRepair: this.#fb.nonNullable.control('', Validators.required),
