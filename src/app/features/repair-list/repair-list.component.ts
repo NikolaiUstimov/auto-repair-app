@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Field } from '../../shared/field/field';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonComponent } from '../../shared/button/button.component';
@@ -16,8 +16,13 @@ import { CardComponent } from '../../shared/card/card.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RepairListComponent {
+  cdr = inject(ChangeDetectorRef);
   #fb = inject(FormBuilder);
   statisticRepair = inject(StatisticRepairService);
+
+  constructor() {
+    this.cdr.markForCheck();
+  }
 
   repairForm = this.#fb.nonNullable.group({
     nameRepair: this.#fb.nonNullable.control('', Validators.required),
@@ -26,7 +31,7 @@ export class RepairListComponent {
     price: this.#fb.nonNullable.control(0, Validators.required),
   });
 
-  addNewRepair() {
+  async addNewRepair() {
     const currentDate = new Date();
     const listData: RepairType[] = this.statisticRepair.dataRepair();
 
@@ -41,7 +46,7 @@ export class RepairListComponent {
       ...formValue,
     };
 
-    this.statisticRepair.addRepair(newRecord);
+    await this.statisticRepair.addRepair(newRecord);
 
     this.repairForm.reset();
   }

@@ -18,21 +18,28 @@ export class IndexedDBService {
   //Инициализация БД
   private async initDB(): Promise<IDBPDatabase<RepairDB>> {
     return openDB<RepairDB>(this.DB_NAME, this.DB_VERSION, {
-      upgrade(db) {
-        if (db.objectStoreNames.contains('repairs')) {
-          db.deleteObjectStore('repairs');
-        }
-
-        const store = db.createObjectStore('repairs' as const, {
-          keyPath: 'id',
-          autoIncrement: false,
-        });
+      upgrade: (db, oldVersion, newVersion, transaction) => {
+        //Проверяем есть ли база, если нет - создаем
+        const store = db.objectStoreNames.contains(this.STORE_NAME)
+          ? transaction.objectStore(this.STORE_NAME)
+          : db.createObjectStore(this.STORE_NAME, {
+              keyPath: 'id',
+              autoIncrement: false,
+            });
 
         //Создание индексов для реализации поиска
-        store.createIndex('by-number', 'number', { unique: false });
-        store.createIndex('by-date', 'createdAt', { unique: false });
-        store.createIndex('by-auto', 'auto', { unique: false });
-        store.createIndex('by-price', 'price', { unique: false });
+        if (!store.indexNames.contains('by-number')) {
+          store.createIndex('by-number', 'number', { unique: false });
+        }
+        if (!store.indexNames.contains('by-date')) {
+          store.createIndex('by-date', 'createdAt', { unique: false });
+        }
+        if (!store.indexNames.contains('by-auto')) {
+          store.createIndex('by-auto', 'auto', { unique: false });
+        }
+        if (!store.indexNames.contains('by-price')) {
+          store.createIndex('by-price', 'price', { unique: false });
+        }
       },
       blocked() {
         console.warn('Подключение к базе данных заблокировано');
