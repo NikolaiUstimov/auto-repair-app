@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { RepairType } from '../../types/repair-type';
 import { IndexedDBService } from './indexed-db.service';
+import { DateUtils } from '../utils/date-utils';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,10 @@ export class StatisticRepairService {
   private async loadRepairs(): Promise<void> {
     try {
       const repairs = await this.indexedDBService.getAllRepairs();
-      this._dataRepair.set(repairs);
+      //Сортируем записи по дате создания
+      const sortedRepairs = this.sortByCreatedAt(repairs);
+
+      this._dataRepair.set(sortedRepairs);
     } catch (error) {
       console.error('Не удалось загрузить записи из IndexedDB', error);
     } finally {
@@ -29,8 +33,32 @@ export class StatisticRepairService {
     }
   }
 
+  //Метод сортировки по дате создания
+  private sortByCreatedAt(repairs: RepairType[]): RepairType[] {
+    return [...repairs].sort(
+      (a, b) =>
+        DateUtils.parseDate(a.createdAt).getTime() - DateUtils.parseDate(b.createdAt).getTime(),
+    );
+  }
+
+  //Добавление записи
   async addRepair(repair: RepairType): Promise<void> {
     await this.indexedDBService.addRepair(repair);
     this._dataRepair.update((list) => [...list, repair]);
+  }
+
+  //Удаление записи по id с восстановлением нумерации по порядку
+  async deleteRepair(id: string): Promise<void> {
+    await this.indexedDBService.deleteRepair(id);
+
+    const remainingRepairs = this._dataRepair().filter((repair) => repair.id !== id);
+    const renumberedRepairs = this.sortByCreatedAt(remainingRepairs).map((repair, index) => ({
+      ...repair,
+      number: index + 1,
+    }));
+
+    await this.indexedDBService.updateRepairs(renumberedRepairs);
+
+    this._dataRepair.set(renumberedRepairs);
   }
 }
