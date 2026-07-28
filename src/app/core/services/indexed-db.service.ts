@@ -65,6 +65,19 @@ export class IndexedDBService {
     }
   }
 
+  //Массовое обновление записей (при удалении записи, чтобы восстановить нумерацию)
+  async updateRepairs(repairs: RepairType[]): Promise<void> {
+    try {
+      const db = await this.dbPromise;
+      const tx = db.transaction(this.STORE_NAME, 'readwrite');
+
+      await Promise.all([...repairs.map((repair) => tx.store.put(repair)), tx.done]);
+    } catch (error) {
+      console.error('Ошибка массового обновления записей', error);
+      throw error;
+    }
+  }
+
   //Получение записи по id
   async getRepairById(id: string): Promise<RepairType | undefined> {
     try {

@@ -34,8 +34,11 @@ export class RepairListComponent {
   async addNewRepair() {
     const currentDate = new Date();
     const listData: RepairType[] = this.statisticRepair.dataRepair();
+    console.log(listData);
 
-    const nextNumber: number = listData.length ? listData[listData.length - 1].number + 1 : 1;
+    const nextNumber: number = listData.length
+      ? Math.max(...listData.map((repair) => repair.number)) + 1
+      : 1;
 
     const id = crypto?.randomUUID() ?? Date.now().toString();
     const formValue: RepairFormValue = this.repairForm.getRawValue();

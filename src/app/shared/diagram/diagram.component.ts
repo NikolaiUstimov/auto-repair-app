@@ -39,9 +39,12 @@ export class DiagramComponent {
       groupedData[key].total += Number(repair.price);
     }
 
-    const sortedKeys = Object.keys(groupedData).sort(
-      (a, b) => new Date(`01.${a}`).getTime() - new Date(`01.${b}`).getTime(),
-    );
+    const sortedKeys = Object.keys(groupedData).sort((a, b) => {
+      const [monthA, yearA] = a.split('.').map(Number);
+      const [monthB, yearB] = b.split('.').map(Number);
+
+      return new Date(yearA, monthA - 1).getTime() - new Date(yearB, monthB - 1).getTime();
+    });
 
     return sortedKeys.map((key) => ({
       month: key,
@@ -80,6 +83,7 @@ export class DiagramComponent {
           type: 'line',
           smooth: true,
           areaStyle: {},
+          yAxisIndex: 0,
           data: data.map((d) => d.count),
         },
         {
@@ -89,6 +93,7 @@ export class DiagramComponent {
           areaStyle: {
             opacity: 0.3,
           },
+          yAxisIndex: 1,
           data: data.map((d) => d.total),
         },
       ],
