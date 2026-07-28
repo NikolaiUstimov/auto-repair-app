@@ -9,5 +9,8 @@
     <button class="card__crud" title="Изменить">
       <svg icon="settings"></svg>
     </button>
+    <button class="card__crud" title="Удалить" (click)="deleteRepair.emit(repair.id)">
+      <svg icon="trash"></svg>
+    </button>
   </li>
 }

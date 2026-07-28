@@ -53,4 +53,13 @@ export class RepairListComponent {
 
     this.repairForm.reset();
   }
+
+  async onDeleteRepair(id: string): Promise<void> {
+    const isConfirmed = confirm('Удалить эту запись? Это действие нельзя отменить.');
+    if (!isConfirmed) {
+      return;
+    }
+
+    await this.statisticRepair.deleteRepair(id);
+  }
 }

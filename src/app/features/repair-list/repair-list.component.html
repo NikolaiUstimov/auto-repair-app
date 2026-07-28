@@ -22,7 +22,11 @@
   </form>
   <ul class="repair-list__box">
     @if (statisticRepair.dataRepair().length !== 0 ) {
-      <app-card class="repair-list__box" [repairList]="statisticRepair.dataRepair()" />
+      <app-card
+        class="repair-list__box"
+        [repairList]="statisticRepair.dataRepair()"
+        (deleteRepair)="onDeleteRepair($event)"
+      />
     } @else {
       <div>Записей пока нет!</div>
     }
