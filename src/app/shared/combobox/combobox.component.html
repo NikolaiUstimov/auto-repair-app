@@ -1,0 +1,26 @@
+<div class="combobox">
+  <label [for]="id()" class="combobox__label">
+    {{ label() }}
+  </label>
+
+  <input
+    class="combobox__input"
+    [id]="id()"
+    type="text"
+    autocomplete="off"
+    [value]="value()"
+    (input)="handleInput($event)"
+    (focus)="handleFocus()"
+    (blur)="handleBlur()"
+  />
+
+  @if (isOpen() && filteredOptions().length) {
+    <ul class="combobox__list">
+      @for (option of filteredOptions(); track option) {
+        <li class="combobox__option" (mousedown)="handleOptionMouseDown($event, option)">
+          {{ option }}
+        </li>
+      }
+    </ul>
+  }
+</div>

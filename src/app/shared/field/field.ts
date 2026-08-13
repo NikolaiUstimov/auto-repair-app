@@ -45,9 +45,11 @@ export class Field implements ControlValueAccessor {
 
   handleInput(event: Event): void {
     const target = event.target as HTMLInputElement;
-    this.value.set(target.value);
+    const newValue: FieldValue =
+      this.type() === 'number' ? (target.value === '' ? null : Number(target.value)) : target.value;
 
-    this.onChange(target.value);
+    this.value.set(newValue);
+    this.onChange(newValue);
     this.onTouched();
   }
 }
