@@ -12,29 +12,29 @@
   transition: background 0.2s;
 
   &.primary {
-    background: v.$color-primary;
-    color: v.$color-white;
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
 
     &:hover {
-      background: v.$color-primary-800;
+      background: var(--color-primary-800);
     }
   }
 
   &.secondary {
-    background: v.$color-secondary;
-    color: v.$color-white;
+    background: var(--color-secondary);
+    color: var(--color-text-inverse);
 
     &:hover {
-      background: v.$color-gray;
+      background: var(--color-gray);
     }
   }
 
   &.danger {
-    background: v.$color-danger;
-    color: v.$color-white;
+    background: var(--color-danger);
+    color: var(--color-text-inverse);
 
     &:hover {
-      background: v.$color-danger-800;
+      background: var(--color-danger-800);
     }
   }
 

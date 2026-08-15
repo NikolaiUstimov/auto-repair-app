@@ -8,20 +8,20 @@
 
   &__label {
     font-size: v.$font-size-small;
-    color: v.$color-text;
+    color: var(--color-text);
   }
 
   &__input {
-    width: 10%;
+    width: 100%;
     padding: 8px 12px;
-    border: v.$border;
+    border: var(--border);
     border-radius: v.$border-radius-s;
 
     &:focus-visible {
-      outline: 1px solid v.$color-secondary;
-      -webkit-box-shadow: 0 0 4px 2px v.$color-secondary;
+      outline: 1px solid var(--color-secondary);
+      -webkit-box-shadow: 0 0 4px 2px var(--color-secondary);
       //-moz-box-shadow: 0 0 4px 2px v.$color-secondary;
-      box-shadow: 0 0 4px 2px v.$color-secondary;
+      box-shadow: 0 0 4px 2px var(--color-secondary);
     }
   }
 
@@ -35,8 +35,8 @@
     max-height: 220px;
     overflow-y: auto;
     list-style: none;
-    background: v.$color-white;
-    border: v.$border;
+    background: var(--color-white);
+    border: var(--border);
     border-radius: v.$border-radius-s;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
   }
@@ -44,11 +44,11 @@
   &__option {
     padding: 8px 12px;
     font-size: v.$font-size-base;
-    color: v.$color-text;
+    color: var(--color-text);
     cursor: pointer;
 
     &:hover {
-      background: v.$color-accent;
+      background: var(--color-accent);
     }
   }
 }

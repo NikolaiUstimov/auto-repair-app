@@ -7,7 +7,8 @@
     (keyup.enter)="addNewRepair()"
   >
     <app-field formControlName="nameRepair" id="nameRepair" label="Тип работ" />
-    <app-field formControlName="auto" id="auto" label="Авто" />
+    <app-combobox formControlName="brand" id="brand" label="Марка" [options]="carBrands" />
+    <app-combobox formControlName="model" id="model" label="Модель" [options]="modelOptions()" />
     <app-field formControlName="licenseNumber" id="licenseNumber" label="Госномер" />
     <app-field formControlName="price" id="price" type="number" label="Стоимость" />
     <app-button

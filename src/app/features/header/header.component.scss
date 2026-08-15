@@ -1,11 +1,9 @@
-@use "variables" as v;
-
 .header {
   height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: v.$color-secondary;
+  background-color: var(--color-secondary);
   padding: 10px 15px;
 
   .logo svg,

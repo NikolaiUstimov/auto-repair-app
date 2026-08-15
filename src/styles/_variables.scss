@@ -1,18 +1,51 @@
-$color-black: #000;
-$color-text: #333;
-$color-gray: #6c757d80;
-$color-white: #fff;
-$color-accent: #f5f4ff;
-$color-blue: blue;
-$color-primary-800: #007bff80;
-$color-primary: #5a4fdc;
-$color-secondary: #7480ff;
-$color-danger-800: #dc354580;
-$color-accent-1: #ff6363;
-$color-danger: #dc3545;
-$color-bg-btn: rgba(90, 79, 220, 0.3);
+//CSS custom properties
+:root {
+  //Base color
+  --color-black: #000;
+  --color-blue: blue;
+  --color-white: #fff;
+  --color-text: #333;
+  --color-text-inverse: #fff;
 
-$gradient: linear-gradient(30deg,rgba(108, 117, 125, 1) 0%, rgba(90, 79, 220, 0.96) 100%);
+  //Main color
+  --color-primary-rgb: 90, 79, 220;
+  --color-primary: rgb(var(--color-primary-rgb));
+  --color-primary-800: rgba(var(--color-primary-rgb), 0.5);
+
+  --color-secondary: #7480ff;
+  --color-accent: #f5f4ff;
+  --color-accent-1: #ff6363;
+
+  --color-danger-rgb: 220, 53, 69;
+  --color-danger: rgb(var(--color-danger-rgb));
+  --color-danger-800: rgba(var(--color-danger-rgb), 0.5);
+
+  --color-gray-rgb: 108, 117, 125;
+  --color-gray: rgba(var(--color-gray-rgb), 0.5);
+
+  --color-bg-btn: rgba(var(--color-primary-rgb), 0.3);
+
+  --gradient: linear-gradient(
+    30deg,
+    rgba(var(--color-gray-rgb), 1) 0%,
+    rgba(var(--color-primary-rgb), 0.96) 100%
+  );
+
+  --border: 1px solid var(--color-gray);
+}
+
+//Theme dark
+[data-theme="dark"] {
+  --color-black: #fff;
+  --color-white: #1e1e24;
+  --color-text: #e4e4e7;
+
+  --color-primary-rgb: 124, 114, 245;
+  --color-secondary: #8a94ff;
+  --color-accent: #2a2a35;
+
+  --color-gray-rgb: 148, 155, 162;
+}
 
 $padding-btn-small: 0.25rem 0.5rem;
 $padding-btn-medium: 0.5rem 1rem;
@@ -23,5 +56,4 @@ $font-size-base: 1rem;
 $font-size-large: 1.2rem;
 $font-size-big: 1.6rem;
 
-$border: 1px solid $color-gray;
 $border-radius-s: 4px;

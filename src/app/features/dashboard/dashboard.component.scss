@@ -1,8 +1,6 @@
-@use "variables" as v;
-
 .dashboard {
   min-height: 100vh;
-  background: linear-gradient(180deg, v.$color-accent 0%, v.$color-white 100%);
+  background: linear-gradient(180deg, var(--color-accent) 0%, var(--color-white) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,7 +9,7 @@
   &__title {
     font-size: 2rem;
     font-weight: 700;
-    color: v.$color-primary;
+    color: var(--color-primary);
     margin-bottom: 2.5rem;
     text-align: center;
   }
@@ -26,20 +24,20 @@
   }
 
   &__button {
-    background-color: v.$color-primary;
-    color: #fff;
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
     font-size: 1.1rem;
     font-weight: 500;
     padding: 0.9rem 2rem;
     border: none;
     border-radius: 12px;
     cursor: pointer;
-    box-shadow: 0 6px 14px v.$color-bg-btn;
+    box-shadow: 0 6px 14px var(--color-bg-btn);
     transition: all 0.3s ease;
 
     &:hover {
-      background-color: v.$color-secondary;
-      box-shadow: 0 8px 18px rgba(90, 79, 220, 0.4);
+      background-color: var(--color-secondary);
+      box-shadow: 0 8px 18px var(--color-primary-800);
       transform: translateY(-2px);
     }
 
@@ -50,9 +48,9 @@
   }
 }
 
-// 📊 Карточки статистики
+// Карточки статистики
 .stat-card {
-  background-color: v.$color-white;
+  background-color: var(--color-white);
   border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   padding: 1.8rem 1.2rem;
@@ -66,14 +64,14 @@
 
   &__title {
     font-size: 1rem;
-    color: #666;
+    color: var(--color-text);
     margin-bottom: 0.5rem;
   }
 
   &__value {
     font-size: 2rem;
     font-weight: 600;
-    color: v.$color-primary;
+    color: var(--color-primary);
   }
 }
 

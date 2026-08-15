@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  forwardRef,
+  input,
+  signal,
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 const SUGGESTIONS_LIMIT = 10;
 
@@ -8,8 +16,15 @@ const SUGGESTIONS_LIMIT = 10;
   templateUrl: './combobox.component.html',
   styleUrl: './combobox.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ComboboxComponent),
+      multi: true,
+    },
+  ],
 })
-export class ComboboxComponent {
+export class ComboboxComponent implements ControlValueAccessor {
   label = input<string | '' | null>(null);
   id = input<string | null>(null);
   //Список вариантов для подсказок выбора моделей, зависит от выбранной марки в родителе

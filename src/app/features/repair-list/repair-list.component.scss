@@ -5,7 +5,7 @@
 
   &__title {
     font-size: v.$font-size-big;
-    color: v.$color-blue;
+    color: var(--color-blue);
     margin-bottom: 20px;
   }
 
