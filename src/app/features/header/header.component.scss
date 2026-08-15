@@ -1,3 +1,5 @@
+@use 'mixins' as m;
+
 .header {
   height: 70px;
   display: flex;
@@ -10,5 +12,19 @@
   .navigate svg {
     width: 45px;
     height: 45px;
+  }
+
+  &__navigate {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    svg {
+      max-width: 35px;
+      max-height: 35px;
+      width: 100%;
+      height: 100%;
+    }
   }
 }

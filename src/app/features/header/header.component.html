@@ -2,7 +2,10 @@
   <a routerLink="/" class="logo">
     <svg icon="auto"></svg>
   </a>
-  <nav class="navigate">
+  <nav class="header__navigate">
+    <button (click)="themeService.toggleTheme()">
+      <svg [icon]="themeService.theme() === 'dark' ? 'light' : 'dark'"></svg>
+    </button>
     <app-burger-button></app-burger-button>
   </nav>
 </header>

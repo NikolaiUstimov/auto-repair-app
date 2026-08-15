@@ -12,6 +12,7 @@
   --color-primary: rgb(var(--color-primary-rgb));
   --color-primary-800: rgba(var(--color-primary-rgb), 0.5);
 
+  --color-secondary-rgb: 116, 128, 255;
   --color-secondary: #7480ff;
   --color-accent: #f5f4ff;
   --color-accent-1: #ff6363;
@@ -27,8 +28,8 @@
 
   --gradient: linear-gradient(
     30deg,
-    rgba(var(--color-gray-rgb), 1) 0%,
-    rgba(var(--color-primary-rgb), 0.96) 100%
+    rgba(var(--color-secondary-rgb), 0.9) 0%,
+    rgba(var(--color-primary-rgb), 0.9) 100%
   );
 
   --border: 1px solid var(--color-gray);

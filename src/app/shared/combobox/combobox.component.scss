@@ -16,6 +16,8 @@
     padding: 8px 12px;
     border: var(--border);
     border-radius: v.$border-radius-s;
+    background-color: var(--color-white);
+    color: var(--color-text);
 
     &:focus-visible {
       outline: 1px solid var(--color-secondary);

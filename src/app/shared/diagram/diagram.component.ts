@@ -57,6 +57,9 @@ export class DiagramComponent {
     const data = this.monthlyStats();
 
     return {
+      textStyle: {
+        fontSize: 14,
+      },
       tooltip: {
         trigger: 'axis',
       },
@@ -82,7 +85,9 @@ export class DiagramComponent {
           name: 'Количество авто',
           type: 'line',
           smooth: true,
-          areaStyle: {},
+          areaStyle: {
+            opacity: 0.9,
+          },
           yAxisIndex: 0,
           data: data.map((d) => d.count),
         },
