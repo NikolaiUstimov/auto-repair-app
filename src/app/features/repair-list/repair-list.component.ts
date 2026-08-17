@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
-  inject,
+  inject, signal,
 } from '@angular/core';
 import { Field } from '../../shared/field/field';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -37,6 +37,9 @@ export class RepairListComponent {
   statisticRepair = inject(StatisticRepairService);
   carCatalog = inject(CarCatalogService);
 
+  //Сигнал для открытия/скрытия формы записи
+  isFormOpen = signal<boolean>(false);
+
   constructor() {
     this.cdr.markForCheck();
   }
@@ -58,6 +61,11 @@ export class RepairListComponent {
 
   carBrands = this.carCatalog.brands;
   modelOptions = computed(() => this.carCatalog.getModelsForBrand(this.brandValue()));
+
+  //Метод открытия/закрытия формы
+  toggleForm(): void {
+    this.isFormOpen.update((isOpen) => !isOpen);
+  };
 
   async addNewRepair() {
     const currentDate = new Date();
@@ -82,7 +90,9 @@ export class RepairListComponent {
 
     await this.statisticRepair.addRepair(newRecord);
 
+    //Сбрасываем и сворачиваем форму
     this.repairForm.reset();
+    this.isFormOpen.set(false);
   }
 
   async onDeleteRepair(id: string): Promise<void> {

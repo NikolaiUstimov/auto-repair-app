@@ -3,6 +3,7 @@
 .repair-list {
   padding: 20px;
   background-color: var(--color-white);
+  min-height: 100%;
 
   &__title {
     font-size: v.$font-size-big;
@@ -10,10 +11,15 @@
     margin-bottom: 20px;
   }
 
+  &__toggle {
+    margin-bottom: 16px;
+  }
+
   &__form {
     display: flex;
     flex-direction: column;
     row-gap: 16px;
+    margin-top: 30px;
     margin-bottom: 40px;
   }
 
@@ -22,5 +28,6 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 16px;
+    margin-top: 20px;
   }
 }

@@ -1,26 +1,39 @@
 <section class="repair-list">
   <h2 class="repair-list__title">Мои записи</h2>
-  <form
-    class="repair-list__form"
-    [formGroup]="repairForm"
-    (ngSubmit)="addNewRepair()"
-    (keyup.enter)="addNewRepair()"
+
+  <app-button
+    variant="secondary"
+    size="medium"
+    class="repair-list__toggle"
+    (action)="toggleForm()"
   >
-    <app-field formControlName="nameRepair" id="nameRepair" label="Тип работ" />
-    <app-combobox formControlName="brand" id="brand" label="Марка" [options]="carBrands" />
-    <app-combobox formControlName="model" id="model" label="Модель" [options]="modelOptions()" />
-    <app-field formControlName="licenseNumber" id="licenseNumber" label="Госномер" />
-    <app-field formControlName="price" id="price" type="number" label="Стоимость" />
-    <app-button
-      type="submit"
-      variant="primary"
-      size="medium"
-      [disabled]="repairForm.invalid"
-      (action)="addNewRepair()"
+    {{ isFormOpen() ? 'Свернуть форму' : '+ Добавить запись' }}
+  </app-button>
+
+  @if (isFormOpen()) {
+    <form
+      class="repair-list__form"
+      [formGroup]="repairForm"
+      (ngSubmit)="addNewRepair()"
+      (keyup.enter)="addNewRepair()"
     >
-      Создать запись
-    </app-button>
-  </form>
+      <app-field formControlName="nameRepair" id="nameRepair" label="Тип работ" />
+      <app-combobox formControlName="brand" id="brand" label="Марка" [options]="carBrands" />
+      <app-combobox formControlName="model" id="model" label="Модель" [options]="modelOptions()" />
+      <app-field formControlName="licenseNumber" id="licenseNumber" label="Госномер" />
+      <app-field formControlName="price" id="price" type="number" label="Стоимость" />
+      <app-button
+        type="submit"
+        variant="primary"
+        size="medium"
+        [disabled]="repairForm.invalid"
+        (action)="addNewRepair()"
+      >
+        Создать запись
+      </app-button>
+    </form>
+  }
+
   <ul class="repair-list__box">
     @if (statisticRepair.dataRepair().length !== 0 ) {
       <app-card
