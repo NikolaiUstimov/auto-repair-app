@@ -18,7 +18,7 @@ type FieldValue = string | number | null;
 })
 export class Field implements ControlValueAccessor {
   label = input<string | '' | null>(null);
-  type = input<'text' | 'number' | 'search'>('text');
+  type = input<'text' | 'number' | 'search' | 'date'>('text');
   id = input<string | null>(null);
 
   value = signal<FieldValue>('');

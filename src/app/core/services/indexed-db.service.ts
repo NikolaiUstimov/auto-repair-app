@@ -28,9 +28,6 @@ export class IndexedDBService {
             });
 
         //Создание индексов для реализации поиска
-        if (!store.indexNames.contains('by-number')) {
-          store.createIndex('by-number', 'number', { unique: false });
-        }
         if (!store.indexNames.contains('by-date')) {
           store.createIndex('by-date', 'createdAt', { unique: false });
         }

@@ -34,15 +34,74 @@
     </form>
   }
 
+  <form
+    class="repair-list__filter"
+    [formGroup]="filterForm"
+  >
+    <app-field
+      formControlName="search"
+      id="search"
+      type="search"
+      label="Поиск по типу работ или авто"
+    />
+    <app-field
+      formControlName="dateFrom"
+      id="dateFrom"
+      type="date"
+      label="Дата с"
+    />
+    <app-field
+      formControlName="dateTo"
+      id="dateTo"
+      type="date"
+      label="Дата по"
+    />
+    <app-button
+      variant="secondary"
+      size="medium"
+      (action)="resetFilters()"
+    >
+      Сбросить фильтр
+    </app-button>
+  </form>
+
   <ul class="repair-list__box">
-    @if (statisticRepair.dataRepair().length !== 0 ) {
+    @if (filteredRepairs().length !== 0 ) {
       <app-card
         class="repair-list__box"
-        [repairList]="statisticRepair.dataRepair()"
+        [repairList]="paginatedRepairs()"
         (deleteRepair)="onDeleteRepair($event)"
       />
-    } @else {
+    } @else if (statisticRepair.dataRepair().length !== 0) {
       <div>Записей пока нет!</div>
+    } @else {
+      <div>По этому фильтру ничего не найдено!</div>
     }
   </ul>
+
+  @if (totalPages() > 1) {
+    <div class="repair-list__pagination">
+      <app-button
+        variant="secondary"
+        size="small"
+        [disabled]="currentPage() === 1"
+        (action)="prevPage()"
+      >
+        Назад
+      </app-button>
+
+      <span class="repair-list__pagination-info">
+        Страница {{ currentPage() }} из {{ totalPages() }}
+      </span>
+
+      <app-button
+        variant="secondary"
+        size="small"
+        [disabled]="currentPage() === totalPages()"
+        (action)="nextPage()"
+      >
+        Вперед
+      </app-button>
+    </div>
+  }
 </section>

@@ -3,7 +3,9 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
-  inject, signal,
+  effect,
+  inject,
+  signal,
 } from '@angular/core';
 import { Field } from '../../shared/field/field';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -65,15 +67,118 @@ export class RepairListComponent {
   //Метод открытия/закрытия формы
   toggleForm(): void {
     this.isFormOpen.update((isOpen) => !isOpen);
-  };
+  }
 
+  //Фильтрация по тексту и по диапазонам дат создания
+  filterForm = this.#fb.nonNullable.group({
+    search: this.#fb.nonNullable.control(''),
+    dateFrom: this.#fb.nonNullable.control(''),
+    dateTo: this.#fb.nonNullable.control(''),
+  });
+
+  private searchValue = toSignal(this.filterForm.controls.search.valueChanges, {
+    initialValue: '',
+  });
+
+  private dateFromValue = toSignal(this.filterForm.controls.dateFrom.valueChanges, {
+    initialValue: '',
+  });
+
+  private dateToValue = toSignal(this.filterForm.controls.dateTo.valueChanges, {
+    initialValue: '',
+  });
+
+  filteredRepairs = computed(() => {
+    const query = this.searchValue().trim().toLowerCase();
+    const dateFrom = this.dateFromValue();
+    const dateTo = this.dateToValue();
+
+    return this.statisticRepair.dataRepair().filter((repair) => {
+      const matchesQuery =
+        !query ||
+        repair.nameRepair.toLowerCase().includes(query) ||
+        repair.auto.toLowerCase().includes(query);
+
+      return matchesQuery && this.matchesDateRange(repair.createdAt, dateFrom, dateTo);
+    });
+  });
+
+  //Метод для приведения полученных дат в установленный здесь формат
+  //dateFrom/dateTo приходят из <input type="date"> в формате "YYYY-MM-DD" (ISO) —
+  //в отличие от нашего "DD.MM.YYYY", такой формат Date понимает однозначно и без ловушек.
+  //"До" включает весь выбранный день целиком, поэтому сравниваем со строгим "меньше начала следующего дня"
+  matchesDateRange(createdAt: string, dateFrom: string, dateTo: string): boolean {
+    if (!dateFrom && !dateTo) {
+      return true;
+    }
+
+    const repairDate = DateUtils.parseDate(createdAt);
+
+    if (dateFrom && repairDate < new Date(dateFrom)) {
+      return false;
+    }
+
+    if (dateTo) {
+      const endOfDay = new Date(dateTo);
+      endOfDay.setDate(endOfDay.getDate() + 1);
+      if (repairDate >= endOfDay) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  resetFilters(): void {
+    this.filterForm.reset();
+  }
+
+  //Пагинация
+  readonly pageSize = 10;
+  currentPage = signal<number>(1);
+
+  totalPages = computed(() =>
+    Math.max(1, Math.ceil(this.filteredRepairs().length / this.pageSize)),
+  );
+
+  paginatedRepairs = computed(() => {
+    const start = (this.currentPage() - 1) * this.pageSize;
+    return this.filteredRepairs().slice(start, start + this.pageSize);
+  });
+
+  //При изменении любого из фильтров возвращаемся на страницу 1
+  //в противном случае может быть несуществующая страница
+  private resetPageOnFilterChange = effect(() => {
+    this.searchValue();
+    this.dateFromValue();
+    this.dateToValue();
+    this.currentPage.set(1);
+  });
+
+  //Если после удаления записей текущая страница стала несуществующей
+  //пример: удалили последнюю запись на последней странице, то сдвигаемся назад
+  private clampPageOnDataChange = effect(() => {
+    const total = this.totalPages();
+    if (this.currentPage() > total) {
+      this.currentPage.set(total);
+    }
+  });
+
+  goToPage(page: number): void {
+    this.currentPage.set(Math.min(Math.max(page, 1), this.totalPages()));
+  }
+
+  nextPage(): void {
+    this.goToPage(this.currentPage() + 1);
+  }
+
+  prevPage(): void {
+    this.goToPage(this.currentPage() - 1);
+  }
+
+  //Добавление новой записи
   async addNewRepair() {
     const currentDate = new Date();
-    const listData: RepairType[] = this.statisticRepair.dataRepair();
-
-    const nextNumber: number = listData.length
-      ? Math.max(...listData.map((repair) => repair.number)) + 1
-      : 1;
 
     const id = crypto?.randomUUID() ?? Date.now().toString();
     const { brand, model, ...restFormValue } = this.repairForm.getRawValue();
@@ -82,7 +187,6 @@ export class RepairListComponent {
       auto: `${brand} ${model}`.trim(),
     };
     const newRecord: RepairType = {
-      number: nextNumber,
       id: id,
       createdAt: DateUtils.formatDate(currentDate),
       ...formValue,

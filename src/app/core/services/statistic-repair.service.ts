@@ -19,13 +19,12 @@ export class StatisticRepairService {
     this.loadRepairs().then();
   }
 
+  //Получение всех записей
   private async loadRepairs(): Promise<void> {
     try {
       const repairs = await this.indexedDBService.getAllRepairs();
-      //Сортируем записи по дате создания
-      const sortedRepairs = this.sortByCreatedAt(repairs);
 
-      this._dataRepair.set(sortedRepairs);
+      this._dataRepair.set(this.toDisplayOrder(repairs));
     } catch (error) {
       console.error('Не удалось загрузить записи из IndexedDB', error);
     } finally {
@@ -33,7 +32,7 @@ export class StatisticRepairService {
     }
   }
 
-  //Метод сортировки по дате создания
+  //Метод сортировки по дате создания (хронология)
   private sortByCreatedAt(repairs: RepairType[]): RepairType[] {
     return [...repairs].sort(
       (a, b) =>
@@ -41,24 +40,23 @@ export class StatisticRepairService {
     );
   }
 
+  //Порядок отображения в списке - новые записи сверху списка
+  private toDisplayOrder(repairs: RepairType[]): RepairType[] {
+    return this.sortByCreatedAt(repairs).reverse();
+  }
+
   //Добавление записи
   async addRepair(repair: RepairType): Promise<void> {
     await this.indexedDBService.addRepair(repair);
-    this._dataRepair.update((list) => [...list, repair]);
+    //Здесь запись добавляется в начало списка и она уже новая по хронологии
+    //поэтому сортировать при обновлении не нужно
+    this._dataRepair.update((list) => [repair, ...list]);
   }
 
-  //Удаление записи по id с восстановлением нумерации по порядку
+  //Удаление записи по id
   async deleteRepair(id: string): Promise<void> {
     await this.indexedDBService.deleteRepair(id);
 
-    const remainingRepairs = this._dataRepair().filter((repair) => repair.id !== id);
-    const renumberedRepairs = this.sortByCreatedAt(remainingRepairs).map((repair, index) => ({
-      ...repair,
-      number: index + 1,
-    }));
-
-    await this.indexedDBService.updateRepairs(renumberedRepairs);
-
-    this._dataRepair.set(renumberedRepairs);
+    this._dataRepair.update((list) => list.filter((repair) => repair.id !== id));
   }
 }
