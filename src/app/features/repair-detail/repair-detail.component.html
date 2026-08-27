@@ -1,0 +1,41 @@
+@if (repair(); as currentRepair) {
+  <section class="repair-detail">
+    <app-button variant="secondary" size="small" (action)="cancel()">← Назад к списку</app-button>
+
+    <h2 class="repair-detail__title">{{ currentRepair.nameRepair }}</h2>
+
+    <div class="repair-detail__photo">
+      @if (isPhotoLoading()) {
+        <div class="repair-detail__photo-placeholder">Загрузка фото...</div>
+      } @else if (photoUrl()) {
+        <img class="repair-detail__photo-img" [src]="photoUrl()" alt="Фото автомобиля" />
+      } @else {
+        <div class="repair-detail__photo-placeholder">Фото не загружено!</div>
+      }
+
+      <label class="repair-detail__photo-upload">
+        {{ photoUrl() ? 'Заменить фото' : 'Загрузить фото' }}
+        <input type="file" accept="image/*" (change)="onPhotoSelected($event)" hidden>
+      </label>
+
+      @if (photoError()) {
+        <p class="repair-detail__photo-error">{{ photoError() }}</p>
+      }
+    </div>
+
+    <form class="repair-detail__form" [formGroup]="editForm" (ngSubmit)="save()">
+      <app-field formControlName="nameRepair" id="edit-nameRepair" label="Тип работ" />
+      <app-field formControlName="auto" id="edit-auto" label="Авто (марка и модель)" />
+      <app-field formControlName="licenseNumber" id="edit-licenseNumber" label="Госномер" />
+      <app-field formControlName="price" id="edit-price" type="number" label="Стоимость" />
+
+      <app-button type="submit" variant="primary" size="medium" [disabled]="editForm.invalid || isSaving()" (action)="save()">
+        {{ isSaving() ? 'Сохранение...' : 'Сохранить' }}
+      </app-button>
+    </form>
+  </section>
+} @else if (statisticRepair.isLoading()) {
+  <p class="repair-detail__status">Загрузка...</p>
+} @else {
+  <p class="repair-detail__status">Запись не найдена</p>
+}

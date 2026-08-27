@@ -1,0 +1,72 @@
+@use 'variables' as v;
+
+.repair-detail {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  background-color: var(--color-white);
+  min-height: 100%;
+
+  &__title {
+    font-size: v.$font-size-big;
+    color: var(--color-primary);
+  }
+
+  &__status {
+    padding: 20px;
+    font-size: v.$font-size-base;
+    color: var(--color-text);
+  }
+
+  &__photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 12px;
+  }
+
+  &__photo-img {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: v.$border-radius-s;
+    border: var(--border);
+  }
+
+  &__photo-placeholder {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-accent);
+    color: var(--color-text-inverse);
+    border-radius: v.$border-radius-s;
+    border: var(--border);
+  }
+
+  &__photo-upload {
+    padding: v.$padding-btn-medium;
+    background-color: var(--color-secondary);
+    color: var(--color-text-inverse);
+    border-radius: v.$border-radius-s;
+    cursor: pointer;
+    font-size: v.$font-size-small;
+    text-align: center;
+  }
+
+  &__photo-error {
+    font-size: v.$font-size-small;
+    color: var(--color-danger);
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+  }
+}

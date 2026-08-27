@@ -1,5 +1,5 @@
 @for (repair of repairList; track repair.id) {
-  <li class="card">
+  <li class="card" [routerLink]="['/repair', repair.id]">
     <p>{{repair.nameRepair}}</p>
     <p>{{repair.auto}}</p>
     <p>{{repair.licenseNumber}}</p>

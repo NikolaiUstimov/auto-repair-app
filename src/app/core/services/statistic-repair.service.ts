@@ -59,4 +59,11 @@ export class StatisticRepairService {
 
     this._dataRepair.update((list) => list.filter((repair) => repair.id !== id));
   }
+
+  //Обновление/редактирование существующей записи
+  async updateRepair(repair: RepairType): Promise<void> {
+    await this.indexedDBService.addRepair(repair); //addRepair делает db.put - это upset по id
+
+    this._dataRepair.update((list) => list.map((item) => (item.id === repair.id ? repair : item)));
+  }
 }

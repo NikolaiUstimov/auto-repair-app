@@ -181,9 +181,10 @@ export class RepairListComponent {
     const currentDate = new Date();
 
     const id = crypto?.randomUUID() ?? Date.now().toString();
-    const { brand, model, ...restFormValue } = this.repairForm.getRawValue();
+    const { brand, model, licenseNumber, ...restFormValue } = this.repairForm.getRawValue();
     const formValue: RepairFormValue = {
       ...restFormValue,
+      licenseNumber: licenseNumber.toUpperCase(),
       auto: `${brand} ${model}`.trim(),
     };
     const newRecord: RepairType = {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RepairDB, RepairType } from '../../types/repair-type';
+import { RepairDB, RepairPhoto, RepairType } from '../../types/repair-type';
 import { IDBPDatabase, openDB } from 'idb';
 
 @Injectable({
@@ -9,7 +9,8 @@ export class IndexedDBService {
   private readonly dbPromise: Promise<IDBPDatabase<RepairDB>>;
   private readonly DB_NAME = 'repair-db';
   private readonly STORE_NAME = 'repairs';
-  private readonly DB_VERSION = 1;
+  private readonly PHOTOS_STORE_NAME = 'photos';
+  private readonly DB_VERSION = 2;
 
   constructor() {
     this.dbPromise = this.initDB();
@@ -36,6 +37,10 @@ export class IndexedDBService {
         }
         if (!store.indexNames.contains('by-price')) {
           store.createIndex('by-price', 'price', { unique: false });
+        }
+        //Новый стор для фото будет во 2-й версии базы данных
+        if (!db.objectStoreNames.contains(this.PHOTOS_STORE_NAME)) {
+          db.createObjectStore(this.PHOTOS_STORE_NAME, { keyPath: 'id' });
         }
       },
       blocked() {
@@ -102,8 +107,32 @@ export class IndexedDBService {
     try {
       const db = await this.dbPromise;
       await db.delete(this.STORE_NAME, id);
+      //Также чистим стор с фото
+      await db.delete(this.PHOTOS_STORE_NAME, id);
     } catch (error) {
       console.error('Ошибка удаления записи', error);
+      throw error;
+    }
+  }
+
+  //Добавление или замена фото для записи
+  async savePhoto(photo: RepairPhoto): Promise<void> {
+    try {
+      const db = await this.dbPromise;
+      await db.put(this.PHOTOS_STORE_NAME, photo);
+    } catch (error) {
+      console.error('Ошибка сохранения фото', error);
+      throw error;
+    }
+  }
+
+  //Получение фото по id записи вместе с метаданными. Вернёт undefined, если фото не загружено
+  async getPhoto(id: string): Promise<RepairPhoto | undefined> {
+    try {
+      const db = await this.dbPromise;
+      return await db.get(this.PHOTOS_STORE_NAME, id);
+    } catch (error) {
+      console.error('Ошибка получения фото', error);
       throw error;
     }
   }
@@ -113,6 +142,8 @@ export class IndexedDBService {
     try {
       const db = await this.dbPromise;
       await db.clear(this.STORE_NAME);
+      //Удаляем также стор с фото
+      await db.clear(this.PHOTOS_STORE_NAME);
     } catch (error) {
       console.error('Ошибка удаления записей', error);
       throw error;
