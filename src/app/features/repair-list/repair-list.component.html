@@ -73,9 +73,9 @@
         (deleteRepair)="onDeleteRepair($event)"
       />
     } @else if (statisticRepair.dataRepair().length !== 0) {
-      <div>Записей пока нет!</div>
+      <div class="repair-list__box-info">Записей пока нет!</div>
     } @else {
-      <div>По этому фильтру ничего не найдено!</div>
+      <div class="repair-list__box-info">По этому фильтру ничего не найдено!</div>
     }
   </ul>
 

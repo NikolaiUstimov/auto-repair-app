@@ -1,0 +1,16 @@
+<!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus, @angular-eslint/template/click-events-have-key-events -->
+<div class="lightbox" (click)="onBackdropClick($event)">
+  <button
+    class="lightbox__close"
+    type="button"
+    (click)="closed.emit()"
+    aria-label="Закрыть фото"
+  >
+    ✕
+  </button>
+  <img
+    class="lightbox__img"
+    [src]="imageUrl()"
+    [alt]="altText()"
+  />
+</div>

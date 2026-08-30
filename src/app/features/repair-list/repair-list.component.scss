@@ -48,6 +48,10 @@
     margin-top: 20px;
   }
 
+  &__box-info {
+    color: var(--color-text);
+  }
+
   &__pagination {
     display: flex;
     align-items: center;

@@ -17,10 +17,11 @@ import { ImageUtils } from '../../core/utils/image-utils';
 import { RepairPhoto, RepairType } from '../../types/repair-type';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { Field } from '../../shared/field/field';
+import { LightboxComponent } from '../../shared/lightbox/lightbox.component';
 
 @Component({
   selector: 'app-repair-detail',
-  imports: [ButtonComponent, ReactiveFormsModule, Field],
+  imports: [ButtonComponent, ReactiveFormsModule, Field, LightboxComponent],
   templateUrl: './repair-detail.component.html',
   styleUrl: './repair-detail.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -55,6 +56,8 @@ export class RepairDetailComponent implements OnInit, OnDestroy {
   photoError = signal<string | null>(null);
   //Метаданные текущего сохранённого фото
   photoMeta = signal<RepairPhoto | null>(null);
+  //Управляет показом полноэкранного просмотра фото (LightboxComponent)
+  isLightboxOpen = signal<boolean>(false);
   //Хранит новое фото до нажатия "Сохранить" — не пишем в IndexedDB на каждый
   //выбор файла, только когда пользователь подтвердил сохранение всей формы.
   private pendingPhotoBlob = signal<Blob | null>(null);

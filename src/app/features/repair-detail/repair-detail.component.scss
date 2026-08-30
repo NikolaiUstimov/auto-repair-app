@@ -33,6 +33,7 @@
     object-fit: cover;
     border-radius: v.$border-radius-s;
     border: var(--border);
+    cursor: pointer;
   }
 
   &__photo-placeholder {

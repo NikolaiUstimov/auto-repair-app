@@ -7,8 +7,8 @@
     <div class="repair-detail__photo">
       @if (isPhotoLoading()) {
         <div class="repair-detail__photo-placeholder">Загрузка фото...</div>
-      } @else if (photoUrl()) {
-        <img class="repair-detail__photo-img" [src]="photoUrl()" alt="Фото автомобиля" />
+      } @else if (photoUrl(); as url) {
+        <img class="repair-detail__photo-img" [src]="url" alt="Фото автомобиля" (click)="isLightboxOpen.set(true)" />
       } @else {
         <div class="repair-detail__photo-placeholder">Фото не загружено!</div>
       }
@@ -22,6 +22,14 @@
         <p class="repair-detail__photo-error">{{ photoError() }}</p>
       }
     </div>
+
+    @if (isLightboxOpen() && photoUrl(); as url) {
+      <app-lightbox
+        [imageUrl]="url"
+        altText="Фото автомобиля"
+        (closed)="isLightboxOpen.set(false)"
+      />
+    }
 
     <form class="repair-detail__form" [formGroup]="editForm" (ngSubmit)="save()">
       <app-field formControlName="nameRepair" id="edit-nameRepair" label="Тип работ" />
