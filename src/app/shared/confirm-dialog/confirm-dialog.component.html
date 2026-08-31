@@ -1,0 +1,32 @@
+@if (confirmService.request(); as req) {
+  <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus, @angular-eslint/template/click-events-have-key-events -->
+  <div class="confirm-dialog" (click)="onBackDropClick($event)">
+    <div class="confirm-dialog__box">
+      <h2 class="confirm-dialog__title">{{ req.title }}</h2>
+
+      @if (req.message) {
+        <p class="confirm-dialog__message">{{ req.message }}</p>
+      }
+
+      <div class="confirm-dialog__actions">
+        <button
+          class="confirm-dialog__button confirm-dialog__button--secondary"
+          type="button"
+          (click)="confirmService.respond(false)"
+        >
+          {{ req.cancelText ?? 'Отмена' }}
+        </button>
+
+        <button
+          class="confirm-dialog__button"
+          [class.confirm-dialog__button--danger]="req.danger"
+          [class.confirm-dialog__button--primary]="!req.danger"
+          type="button"
+          (click)="confirmService.respond(true)"
+        >
+          {{ req.confirmText ?? 'Подтвердить' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

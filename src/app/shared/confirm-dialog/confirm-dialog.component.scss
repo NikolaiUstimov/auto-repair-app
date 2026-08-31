@@ -1,0 +1,73 @@
+@use 'variables' as v;
+
+.confirm-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 16px;
+  animation: confirm-dialog-fade-in 0.15s ease-out;
+
+  &__box {
+    width: 100%;
+    max-width: 360px;
+    padding: 24px;
+    background-color: var(--color-white);
+    border-radius: v.$border-radius-s;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  &__title {
+    font-size: v.$font-size-large;
+    color: var(--color-text);
+    margin-bottom: 8px;
+  }
+
+  &__message {
+    font-size: v.$font-size-base;
+    color: var(--color-text);
+    margin-bottom: 20px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 12px;
+  }
+
+  &__button {
+    padding: v.$padding-btn-medium;
+    border-radius: v.$border-radius-s;
+    font-size: v.$font-size-small;
+    font-weight: bold;
+    cursor: pointer;
+
+    &--secondary {
+      background-color: transparent;
+      color: var(--color-text);
+      border: var(--border);
+    }
+
+    &--primary {
+      background-color: var(--color-primary);
+      color: var(--color-text-inverse);
+    }
+
+    &--danger {
+      background-color: var(--color-danger);
+      color: var(--color-text-inverse);
+    }
+  }
+}
+
+@keyframes confirm-dialog-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

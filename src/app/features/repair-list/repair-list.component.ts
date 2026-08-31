@@ -18,6 +18,7 @@ import { CardComponent } from '../../shared/card/card.component';
 import { CarCatalogService } from '../../core/services/car-catalog.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ComboboxComponent } from '../../shared/combobox/combobox.component';
+import { ConfirmService } from '../../core/services/confirm.service';
 
 @Component({
   selector: 'app-repair-list',
@@ -200,11 +201,19 @@ export class RepairListComponent {
     this.isFormOpen.set(false);
   }
 
+  private confirmService = inject(ConfirmService);
   async onDeleteRepair(id: string): Promise<void> {
-    const isConfirmed = confirm('Удалить эту запись? Это действие нельзя отменить.');
-    if (!isConfirmed) {
-      return;
-    }
+    const isConfirmed = await this.confirmService.confirm({
+      title: 'Удалить запись',
+      message: 'Это действие нельзя отменить',
+      confirmText: 'Удалить',
+      danger: true,
+    });
+    if (!isConfirmed) return;
+    // const isConfirmed = confirm('Удалить эту запись? Это действие нельзя отменить.');
+    // if (!isConfirmed) {
+    //   return;
+    // }
 
     await this.statisticRepair.deleteRepair(id);
   }
