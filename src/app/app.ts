@@ -1,9 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './features/header/header.component';
-import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
-import { filter } from 'rxjs';
-import { UpdateBannerComponent } from './shared/update-bunner/update-banner.component';
+import { UpdateBannerComponent } from './shared/update-banner/update-banner.component';
 
 @Component({
   selector: 'app-root',
@@ -12,20 +10,5 @@ import { UpdateBannerComponent } from './shared/update-bunner/update-banner.comp
   styleUrl: './app.scss',
 })
 export class App {
-  private swUpdate = inject(SwUpdate);
   protected readonly title = signal('auto-repair-app');
-
-  constructor() {
-    this.setupUpdate();
-  }
-
-  private setupUpdate(): void {
-    this.swUpdate.versionUpdates
-      .pipe(filter((event): event is VersionReadyEvent => event.type === 'VERSION_READY'))
-      .subscribe(() => {
-        if (confirm('New version available. Load New Version?')) {
-          this.swUpdate.activateUpdate().then(() => window.location.reload());
-        }
-      });
-  }
 }
