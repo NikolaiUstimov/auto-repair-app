@@ -1,0 +1,12 @@
+@if (updateService.updateAvailable()) {
+  <div class="update-banner">
+    <p class="update-banner__text">Доступна новая версия приложения</p>
+    <button
+      class="update-banner__button"
+      type="button"
+      (click)="updateService.reloadForUpdate()"
+    >
+      Обновить
+    </button>
+  </div>
+}
