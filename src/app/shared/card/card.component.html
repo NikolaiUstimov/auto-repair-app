@@ -5,10 +5,7 @@
     <p>{{repair.licenseNumber}}</p>
     <p>{{repair.price | currency: 'RUB' : 'symbol' : '1.1-1'}}</p>
     <p>{{repair.createdAt}}</p>
-<!--    <button class="card__crud" title="Изменить">-->
-<!--      <svg icon="settings"></svg>-->
-<!--    </button>-->
-    <button class="card__crud" title="Удалить" (click)="deleteRepair.emit(repair.id)">
+    <button class="card__crud" title="Удалить" (click)="$event.stopPropagation(); deleteRepair.emit(repair.id)">
       <svg icon="trash"></svg>
     </button>
   </li>
