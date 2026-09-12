@@ -36,6 +36,7 @@
       <app-field formControlName="auto" id="edit-auto" label="Авто (марка и модель)" />
       <app-field formControlName="licenseNumber" id="edit-licenseNumber" label="Госномер" />
       <app-field formControlName="price" id="edit-price" type="number" label="Стоимость" />
+      <app-field formControlName="comment" id="edit-comment" type="textarea" label="Комментарий" />
 
       <app-button type="submit" variant="primary" size="medium" [disabled]="editForm.invalid || isSaving()" (action)="save()">
         {{ isSaving() ? 'Сохранение...' : 'Сохранить' }}

@@ -5,11 +5,20 @@
   >
     {{label()}}
   </label>
-  <input
-    class="field__input"
-    [id]="id()"
-    [type]="type()"
-    [value]="value()"
-    (input)="handleInput($event)"
-  />
+  @if (type() === 'textarea') {
+    <textarea
+      class="field__input field__textarea"
+      [id]="id()"
+      [value]="value()"
+      (input)="handleInput($event)"
+    ></textarea>
+  } @else {
+    <input
+      class="field__input"
+      [id]="id()"
+      [type]="type()"
+      [value]="value()"
+      (input)="handleInput($event)"
+    />
+  }
 </div>

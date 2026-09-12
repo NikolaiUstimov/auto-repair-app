@@ -210,10 +210,6 @@ export class RepairListComponent {
       danger: true,
     });
     if (!isConfirmed) return;
-    // const isConfirmed = confirm('Удалить эту запись? Это действие нельзя отменить.');
-    // if (!isConfirmed) {
-    //   return;
-    // }
 
     await this.statisticRepair.deleteRepair(id);
   }

@@ -7,6 +7,7 @@ export interface RepairType {
   auto: string;
   licenseNumber: string;
   price: number;
+  comment?: string;
 }
 
 //Отдельный тип для создания записи с фотографией

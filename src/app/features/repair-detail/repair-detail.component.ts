@@ -48,6 +48,7 @@ export class RepairDetailComponent implements OnInit, OnDestroy {
     auto: this.fb.nonNullable.control('', [Validators.required]),
     licenseNumber: this.fb.nonNullable.control('', [Validators.required]),
     price: this.fb.nonNullable.control(0, [Validators.required]),
+    comment: this.fb.nonNullable.control(''),
   });
 
   photoUrl = signal<string | null>(null);
@@ -72,6 +73,9 @@ export class RepairDetailComponent implements OnInit, OnDestroy {
           auto: repair.auto,
           licenseNumber: repair.licenseNumber,
           price: repair.price,
+          //?? '' — у старых записей, созданных до появления комментариев,
+          //поле comment отсутствует вовсе (не undefined в объекте, а его нет).
+          comment: repair.comment ?? '',
         });
       }
     });
