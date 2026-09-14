@@ -143,37 +143,19 @@
   },
   {
     "brand": "Aurus",
-    "models": [
-      "Komendant",
-      "Senat"
-    ]
+    "models": ["Komendant", "Senat"]
   },
   {
     "brand": "Avatr",
-    "models": [
-      "11",
-      "12"
-    ]
+    "models": ["11", "12"]
   },
   {
     "brand": "BAIC",
-    "models": [
-      "BJ40",
-      "BJ40 Plus",
-      "EV5",
-      "U5 Plus",
-      "X35",
-      "X55",
-      "X7",
-      "X75"
-    ]
+    "models": ["BJ40", "BJ40 Plus", "EV5", "U5 Plus", "X35", "X55", "X7", "X75"]
   },
   {
     "brand": "Belgee",
-    "models": [
-      "X50",
-      "X70"
-    ]
+    "models": ["X50", "X70"]
   },
   {
     "brand": "Bentley",
@@ -236,20 +218,11 @@
   },
   {
     "brand": "Brilliance",
-    "models": [
-      "H230",
-      "V3",
-      "V5"
-    ]
+    "models": ["H230", "V3", "V5"]
   },
   {
     "brand": "Bugatti",
-    "models": [
-      "Chiron",
-      "Divo",
-      "Veyron",
-      "W16 Mistral"
-    ]
+    "models": ["Chiron", "Divo", "Veyron", "W16 Mistral"]
   },
   {
     "brand": "Buick",
@@ -273,15 +246,7 @@
   },
   {
     "brand": "BYD",
-    "models": [
-      "Dolphin",
-      "Dolphin Plus",
-      "Han",
-      "Qin",
-      "Seal",
-      "Tang",
-      "Yangwang U8"
-    ]
+    "models": ["Dolphin", "Dolphin Plus", "Han", "Qin", "Seal", "Tang", "Yangwang U8"]
   },
   {
     "brand": "Cadillac",
@@ -542,10 +507,7 @@
   },
   {
     "brand": "Datsun",
-    "models": [
-      "mi-DO",
-      "on-DO"
-    ]
+    "models": ["mi-DO", "on-DO"]
   },
   {
     "brand": "Dodge",
@@ -589,23 +551,11 @@
   },
   {
     "brand": "Evolute",
-    "models": [
-      "i-Jet",
-      "i-Joy",
-      "i-Pro",
-      "i-Sky",
-      "i-Space",
-      "i-Van"
-    ]
+    "models": ["i-Jet", "i-Joy", "i-Pro", "i-Sky", "i-Space", "i-Van"]
   },
   {
     "brand": "Exeed",
-    "models": [
-      "LX",
-      "RX",
-      "TXL",
-      "VX"
-    ]
+    "models": ["LX", "RX", "TXL", "VX"]
   },
   {
     "brand": "FAW",
@@ -708,10 +658,7 @@
   },
   {
     "brand": "Fisker",
-    "models": [
-      "Karma",
-      "Ocean"
-    ]
+    "models": ["Karma", "Ocean"]
   },
   {
     "brand": "Ford",
@@ -771,23 +718,11 @@
   },
   {
     "brand": "Foton",
-    "models": [
-      "Sauvana",
-      "Toano",
-      "Tunland G7",
-      "Tunland V7",
-      "Tunland V9"
-    ]
+    "models": ["Sauvana", "Toano", "Tunland G7", "Tunland V7", "Tunland V9"]
   },
   {
     "brand": "GAC",
-    "models": [
-      "GM8",
-      "GN8",
-      "GS3",
-      "GS5",
-      "GS8"
-    ]
+    "models": ["GM8", "GN8", "GS3", "GS5", "GS8"]
   },
   {
     "brand": "GAZ",
@@ -834,14 +769,7 @@
   },
   {
     "brand": "Genesis",
-    "models": [
-      "G70",
-      "G80",
-      "G90",
-      "GV60",
-      "GV70",
-      "GV80"
-    ]
+    "models": ["G70", "G80", "G90", "GV60", "GV70", "GV80"]
   },
   {
     "brand": "GMC",
@@ -879,10 +807,7 @@
   },
   {
     "brand": "Haima",
-    "models": [
-      "7X",
-      "M3"
-    ]
+    "models": ["7X", "M3"]
   },
   {
     "brand": "Haval",
@@ -905,11 +830,7 @@
   },
   {
     "brand": "Holden",
-    "models": [
-      "Colorado",
-      "Commodore",
-      "Corvette C8"
-    ]
+    "models": ["Colorado", "Commodore", "Corvette C8"]
   },
   {
     "brand": "Honda",
@@ -951,21 +872,11 @@
   },
   {
     "brand": "Hongqi",
-    "models": [
-      "E-HS9",
-      "H5",
-      "H9",
-      "HS3",
-      "HS5"
-    ]
+    "models": ["E-HS9", "H5", "H9", "HS3", "HS5"]
   },
   {
     "brand": "Hummer",
-    "models": [
-      "H1",
-      "H2",
-      "H3"
-    ]
+    "models": ["H1", "H2", "H3"]
   },
   {
     "brand": "Hyundai",
@@ -1068,40 +979,19 @@
   },
   {
     "brand": "Iveco",
-    "models": [
-      "Daily"
-    ]
+    "models": ["Daily"]
   },
   {
     "brand": "Jac",
-    "models": [
-      "iEV7S",
-      "J7",
-      "JS3",
-      "JS4",
-      "JS6",
-      "S3",
-      "S3 Pro",
-      "S5",
-      "T6",
-      "T8",
-      "T8 Pro",
-      "T9"
-    ]
+    "models": ["iEV7S", "J7", "JS3", "JS4", "JS6", "S3", "S3 Pro", "S5", "T6", "T8", "T8 Pro", "T9"]
   },
   {
     "brand": "JAC",
-    "models": [
-      "JS4",
-      "JS6"
-    ]
+    "models": ["JS4", "JS6"]
   },
   {
     "brand": "Jaecoo",
-    "models": [
-      "J7",
-      "J8"
-    ]
+    "models": ["J7", "J8"]
   },
   {
     "brand": "Jaguar",
@@ -1138,32 +1028,15 @@
   },
   {
     "brand": "Jetour",
-    "models": [
-      "Dashing",
-      "T1",
-      "T2",
-      "Traveler",
-      "X50",
-      "X70 Plus",
-      "X90 Plus"
-    ]
+    "models": ["Dashing", "T1", "T2", "Traveler", "X50", "X70 Plus", "X90 Plus"]
   },
   {
     "brand": "Jetta",
-    "models": [
-      "VA3",
-      "VS5",
-      "VS7"
-    ]
+    "models": ["VA3", "VS5", "VS7"]
   },
   {
     "brand": "Kaiyi",
-    "models": [
-      "E5",
-      "X3",
-      "X3 Pro",
-      "X7 Kunlun"
-    ]
+    "models": ["E5", "X3", "X3 Pro", "X7 Kunlun"]
   },
   {
     "brand": "Kia",
@@ -1241,15 +1114,7 @@
   },
   {
     "brand": "Lancia",
-    "models": [
-      "Delta",
-      "Lybra",
-      "Musa",
-      "Phedra",
-      "Thema",
-      "Thesis",
-      "Ypsilon"
-    ]
+    "models": ["Delta", "Lybra", "Musa", "Phedra", "Thema", "Thesis", "Ypsilon"]
   },
   {
     "brand": "Land Rover",
@@ -1326,41 +1191,19 @@
   },
   {
     "brand": "Livan",
-    "models": [
-      "S6 Pro",
-      "X3 Pro",
-      "X6 Pro"
-    ]
+    "models": ["S6 Pro", "X3 Pro", "X6 Pro"]
   },
   {
     "brand": "LiXiang",
-    "models": [
-      "L6",
-      "L7",
-      "L8",
-      "L9",
-      "Mega"
-    ]
+    "models": ["L6", "L7", "L8", "L9", "Mega"]
   },
   {
     "brand": "Lotus",
-    "models": [
-      "Eletre",
-      "Elise",
-      "Emeya",
-      "Emira",
-      "Europa S",
-      "Evija",
-      "Evora",
-      "Exige"
-    ]
+    "models": ["Eletre", "Elise", "Emeya", "Emira", "Europa S", "Evija", "Evora", "Exige"]
   },
   {
     "brand": "Marussia",
-    "models": [
-      "B1",
-      "B2"
-    ]
+    "models": ["B1", "B2"]
   },
   {
     "brand": "Maserati",
@@ -1382,13 +1225,7 @@
   },
   {
     "brand": "Maybach",
-    "models": [
-      "57",
-      "57 S",
-      "62",
-      "62 S",
-      "Landaulet"
-    ]
+    "models": ["57", "57 S", "62", "62 S", "Landaulet"]
   },
   {
     "brand": "Mazda",
@@ -1508,23 +1345,11 @@
   },
   {
     "brand": "Mercedes-Maybach",
-    "models": [
-      "EQS",
-      "GLS-Class",
-      "SL-Class"
-    ]
+    "models": ["EQS", "GLS-Class", "SL-Class"]
   },
   {
     "brand": "Mercury",
-    "models": [
-      "Grand Marquis",
-      "Mariner",
-      "Milan",
-      "Montego",
-      "Monterey",
-      "Mountaineer",
-      "Sable"
-    ]
+    "models": ["Grand Marquis", "Mariner", "Milan", "Montego", "Monterey", "Mountaineer", "Sable"]
   },
   {
     "brand": "MG",
@@ -1569,6 +1394,10 @@
       "ASX",
       "Carisma",
       "Colt",
+      "Delica",
+      "Delica D:2",
+      "Delica D:3",
+      "Delica D:5",
       "Dignity",
       "Eclipse",
       "Eclipse Cross",
@@ -1579,15 +1408,19 @@
       "i-MiEV",
       "L200",
       "Lancer",
+      "Lancer Cedia",
       "Lancer Evo",
       "Mirage",
       "Outlander",
       "Outlander Sport",
       "Outlander XL",
       "Pajero",
+      "Pajero Mini",
       "Pajero Pinin",
       "Pajero Sport",
+      "Pajero iO",
       "Raider",
+      "RVR",
       "Space Gear",
       "Space Runner",
       "Space Star",
@@ -1596,12 +1429,7 @@
   },
   {
     "brand": "Moskvich",
-    "models": [
-      "3",
-      "3e",
-      "6",
-      "8"
-    ]
+    "models": ["3", "3e", "6", "8"]
   },
   {
     "brand": "Nissan",
@@ -1652,15 +1480,7 @@
   },
   {
     "brand": "Omoda",
-    "models": [
-      "5",
-      "9",
-      "C5",
-      "C7",
-      "E5",
-      "S5",
-      "S5 GT"
-    ]
+    "models": ["5", "9", "C5", "C7", "E5", "S5", "S5 GT"]
   },
   {
     "brand": "Opel",
@@ -1737,9 +1557,7 @@
   },
   {
     "brand": "Plymouth",
-    "models": [
-      "Road Runner"
-    ]
+    "models": ["Road Runner"]
   },
   {
     "brand": "Pontiac",
@@ -1790,9 +1608,7 @@
   },
   {
     "brand": "Ravon",
-    "models": [
-      "Gentra"
-    ]
+    "models": ["Gentra"]
   },
   {
     "brand": "Renault",
@@ -1848,57 +1664,23 @@
   },
   {
     "brand": "Rolls-Royce",
-    "models": [
-      "Cullinan",
-      "Dawn",
-      "Ghost",
-      "Phantom",
-      "Spectre",
-      "Wraith"
-    ]
+    "models": ["Cullinan", "Dawn", "Ghost", "Phantom", "Spectre", "Wraith"]
   },
   {
     "brand": "Rover",
-    "models": [
-      "25",
-      "400",
-      "45",
-      "600",
-      "75",
-      "Streetwise"
-    ]
+    "models": ["25", "400", "45", "600", "75", "Streetwise"]
   },
   {
     "brand": "Saab",
-    "models": [
-      "9-2x",
-      "9-3",
-      "9-4x",
-      "9-5",
-      "9-7x"
-    ]
+    "models": ["9-2x", "9-3", "9-4x", "9-5", "9-7x"]
   },
   {
     "brand": "Saturn",
-    "models": [
-      "Aura",
-      "Ion",
-      "LW",
-      "Outlook",
-      "SC",
-      "Sky",
-      "Vue"
-    ]
+    "models": ["Aura", "Ion", "LW", "Outlook", "SC", "Sky", "Vue"]
   },
   {
     "brand": "Scion",
-    "models": [
-      "FR-S",
-      "tC",
-      "xA",
-      "xB",
-      "xD"
-    ]
+    "models": ["FR-S", "tC", "xA", "xB", "xD"]
   },
   {
     "brand": "Seat",
@@ -1921,13 +1703,7 @@
   },
   {
     "brand": "Seres",
-    "models": [
-      "M5",
-      "M7",
-      "Seres 3",
-      "Seres 5",
-      "Seres 7"
-    ]
+    "models": ["M5", "M7", "Seres 3", "Seres 5", "Seres 7"]
   },
   {
     "brand": "Skoda",
@@ -1954,21 +1730,11 @@
   },
   {
     "brand": "Smart",
-    "models": [
-      "#1",
-      "#3",
-      "#5",
-      "Forfour",
-      "Fortwo",
-      "Roadster"
-    ]
+    "models": ["#1", "#3", "#5", "Forfour", "Fortwo", "Roadster"]
   },
   {
     "brand": "Soueast",
-    "models": [
-      "S07",
-      "S09"
-    ]
+    "models": ["S07", "S09"]
   },
   {
     "brand": "Ssang Yong",
@@ -2007,6 +1773,7 @@
       "Impreza WRX STI",
       "Justy",
       "Legacy",
+      "Legacy B4",
       "Levorg",
       "Outback",
       "Solterra",
@@ -2043,23 +1810,11 @@
   },
   {
     "brand": "Tank",
-    "models": [
-      "300",
-      "400",
-      "500",
-      "700"
-    ]
+    "models": ["300", "400", "500", "700"]
   },
   {
     "brand": "Tesla",
-    "models": [
-      "Cybertruck",
-      "Model 3",
-      "Model S",
-      "Model X",
-      "Model Y",
-      "Roadster"
-    ]
+    "models": ["Cybertruck", "Model 3", "Model S", "Model X", "Model Y", "Roadster"]
   },
   {
     "brand": "Toyota",
@@ -2081,6 +1836,7 @@
       "Corolla",
       "Corolla Cross",
       "Corolla Verso",
+      "Corolla Fielder",
       "Crown",
       "FJ Cruiser",
       "Fortuner",
@@ -2099,11 +1855,14 @@
       "MR2",
       "Picnic",
       "Previa",
+      "Premio",
       "Prius",
       "Prius Prime",
+      "Probox",
       "RAV4",
       "Sequoia",
       "Sienna",
+      "Succeed",
       "Supra",
       "Tacoma",
       "Tundra",
@@ -2247,55 +2006,26 @@
   },
   {
     "brand": "Voyah",
-    "models": [
-      "Dream",
-      "Free",
-      "Passion"
-    ]
+    "models": ["Dream", "Free", "Passion"]
   },
   {
     "brand": "Wiesmann",
-    "models": [
-      "Thunderball"
-    ]
+    "models": ["Thunderball"]
   },
   {
     "brand": "Zeekr",
-    "models": [
-      "001",
-      "007",
-      "009",
-      "7X",
-      "9X",
-      "X"
-    ]
+    "models": ["001", "007", "009", "7X", "9X", "X"]
   },
   {
     "brand": "ГАЗ",
-    "models": [
-      "Газель",
-      "Газель NEXT",
-      "Соболь",
-      "Волга"
-    ]
+    "models": ["Газель", "Газель NEXT", "Соболь", "Волга"]
   },
   {
     "brand": "Москвич",
-    "models": [
-      "3",
-      "3e",
-      "6",
-      "8"
-    ]
+    "models": ["3", "3e", "6", "8"]
   },
   {
     "brand": "УАЗ",
-    "models": [
-      "Patriot",
-      "Hunter",
-      "Pickup",
-      "Profi",
-      "Буханка"
-    ]
+    "models": ["Patriot", "Hunter", "Pickup", "Profi", "Буханка"]
   }
 ]
