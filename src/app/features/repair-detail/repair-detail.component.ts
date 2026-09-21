@@ -18,6 +18,15 @@ import { RepairPhoto, RepairType } from '../../types/repair-type';
 import { ButtonComponent } from '../../shared/button/button.component';
 import { Field } from '../../shared/field/field';
 import { LightboxComponent } from '../../shared/lightbox/lightbox.component';
+import { ConfirmService } from '../../core/services/confirm.service';
+
+//Фото записи + object URL для превью.
+//Всё, что есть в этом списке, уже сохранено в IndexedDB — промежуточного
+//"ещё не сохранённого" состояния у фото больше нет.
+interface PhotoItem {
+  photo: RepairPhoto;
+  url: string;
+}
 
 @Component({
   selector: 'app-repair-detail',
@@ -35,6 +44,7 @@ export class RepairDetailComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private indexedDBService = inject(IndexedDBService);
+  private confirmService = inject(ConfirmService);
   statisticRepair = inject(StatisticRepairService);
 
   //Запись берётся из уже загруженного в память списка (единый источник данных
@@ -51,17 +61,15 @@ export class RepairDetailComponent implements OnInit, OnDestroy {
     comment: this.fb.nonNullable.control(''),
   });
 
-  photoUrl = signal<string | null>(null);
+  photos = signal<PhotoItem[]>([]);
   isPhotoLoading = signal<boolean>(true);
+  //Идёт сжатие/запись фото в БД — на это время блокируем кнопку добавления,
+  //чтобы пользователь не запустил вторую загрузку поверх текущей
+  isPhotoUploading = signal<boolean>(false);
   isSaving = signal<boolean>(false);
   photoError = signal<string | null>(null);
-  //Метаданные текущего сохранённого фото
-  photoMeta = signal<RepairPhoto | null>(null);
-  //Управляет показом полноэкранного просмотра фото (LightboxComponent)
-  isLightboxOpen = signal<boolean>(false);
-  //Хранит новое фото до нажатия "Сохранить" — не пишем в IndexedDB на каждый
-  //выбор файла, только когда пользователь подтвердил сохранение всей формы.
-  private pendingPhotoBlob = signal<Blob | null>(null);
+  //Какое фото сейчас открыто в полноэкранном просмотре (null — лайтбокс закрыт)
+  selectedPhotoUrl = signal<string | null>(null);
 
   constructor() {
     //Как только запись найдена, заполняем данными из базы текущую форму для редактирования
@@ -82,17 +90,14 @@ export class RepairDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadPhoto().then();
+    this.loadPhotos().then();
   }
 
-  //Загрузка фотографии
-  private async loadPhoto(): Promise<void> {
+  //Загрузка всех фото записи
+  private async loadPhotos(): Promise<void> {
     try {
-      const photo = await this.indexedDBService.getPhoto(this.id());
-      if (photo) {
-        this.setPhotoUrl(photo.photo);
-        this.photoMeta.set(photo);
-      }
+      const photos = await this.indexedDBService.getPhotosByRepairId(this.id());
+      this.photos.set(photos.map((photo) => ({ photo, url: URL.createObjectURL(photo.photo) })));
     } catch (error) {
       console.error('Не удалось загрузить фото', error);
       this.photoError.set('Не удалось загрузить фото. Попробуйте обновить страницу');
@@ -101,44 +106,82 @@ export class RepairDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  //object URL — это ссылка в памяти вкладки на Blob, её обязательно нужно
-  //освобождать через revokeObjectURL, когда она больше не нужна, иначе это
-  //утечка памяти (браузер держит Blob в памяти, пока ссылка не отозвана)
-  private setPhotoUrl(blob: Blob): void {
-    const previousUrl = this.photoUrl();
-    if (previousUrl) {
-      URL.revokeObjectURL(previousUrl);
-    }
-
-    this.photoUrl.set(URL.createObjectURL(blob));
-  }
-
-  //Метод добавления фото
-  async onPhotoSelected(event: Event): Promise<void> {
+  //Добавление одного или нескольких фото — каждое сразу пишется в IndexedDB
+  async onPhotosSelected(event: Event): Promise<void> {
     const target = event.target as HTMLInputElement;
-    const file = target.files?.[0];
-    if (!file) {
+    const files = target.files;
+    if (!files || files.length === 0) {
       return;
     }
 
     this.photoError.set(null);
+    this.isPhotoUploading.set(true);
 
     try {
-      const compressed = await ImageUtils.compressImage(file);
-      this.pendingPhotoBlob.set(compressed);
-      //Показываем превью перед сохранением в БД
-      this.setPhotoUrl(compressed);
-    } catch (error) {
-      //Показываем текст ошибки если она возникает
-      const message = error instanceof Error ? error.message : 'Не удалось обработать фото';
-      this.photoError.set(message);
+      //Обрабатываем файлы по очереди — если один окажется битым, остальные
+      //всё равно должны сохраниться, а не рухнуть вместе с ним
+      for (const file of Array.from(files)) {
+        try {
+          const compressed = await ImageUtils.compressImage(file);
+          const { width, height } = await ImageUtils.getImageDimensions(compressed);
+
+          const photo: RepairPhoto = {
+            id: crypto.randomUUID(),
+            repairId: this.id(),
+            photo: compressed,
+            mimeType: compressed.type,
+            size: compressed.size,
+            width,
+            height,
+            createdAt: Date.now(),
+          };
+
+          await this.indexedDBService.savePhoto(photo);
+
+          this.photos.update((list) => [...list, { photo, url: URL.createObjectURL(compressed) }]);
+        } catch (error) {
+          const message = error instanceof Error ? error.message : 'Не удалось обработать фото';
+          this.photoError.set(message);
+        }
+      }
     } finally {
+      this.isPhotoUploading.set(false);
       //Сбрасываем значение инпута, чтобы можно было повторно сделать загрузку
       target.value = '';
     }
   }
 
-  //Сохранение изменённой записи
+  //Удаление фото — сразу из БД, без ожидания "Сохранить".
+  //Отменить это нельзя, поэтому формулировка в диалоге соответствующая
+  async onDeletePhoto(item: PhotoItem): Promise<void> {
+    const isConfirmed = await this.confirmService.confirm({
+      title: 'Удалить фото?',
+      message: 'Это действие нельзя отменить',
+      confirmText: 'Удалить',
+      danger: true,
+    });
+    if (!isConfirmed) {
+      return;
+    }
+
+    try {
+      await this.indexedDBService.deletePhoto(item.photo.id);
+
+      //Если удаляемое фото открыто в лайтбоксе — закрываем его,
+      //иначе останется висеть картинка по уже отозванному URL
+      if (this.selectedPhotoUrl() === item.url) {
+        this.selectedPhotoUrl.set(null);
+      }
+
+      URL.revokeObjectURL(item.url);
+      this.photos.update((list) => list.filter((p) => p.photo.id !== item.photo.id));
+    } catch (error) {
+      console.error('Не удалось удалить фото', error);
+      this.photoError.set('Не удалось удалить фото. Попробуйте ещё раз');
+    }
+  }
+
+  //Сохранение изменённой записи (текстовых полей)
   async save(): Promise<void> {
     const currentRepair = this.repair();
     if (!currentRepair || this.editForm.invalid) {
@@ -153,27 +196,6 @@ export class RepairDetailComponent implements OnInit, OnDestroy {
       };
 
       await this.statisticRepair.updateRepair(updatedRepair);
-
-      const pendingPhoto = this.pendingPhotoBlob();
-      if (pendingPhoto) {
-        //mimeType и size уже есть в самом Blob — читаем напрямую, без доп. вычислений.
-        //width/height требуют декодирования — единственное место, где это реально нужно.
-        const { width, height } = await ImageUtils.getImageDimensions(pendingPhoto);
-
-        const photo: RepairPhoto = {
-          id: this.id(),
-          photo: pendingPhoto,
-          mimeType: pendingPhoto.type,
-          size: pendingPhoto.size,
-          width,
-          height,
-          createdAt: Date.now(),
-        };
-
-        await this.indexedDBService.savePhoto(photo);
-        this.pendingPhotoBlob.set(null);
-      }
-
       await this.router.navigate(['/repair-list']);
     } finally {
       this.isSaving.set(false);
@@ -185,9 +207,7 @@ export class RepairDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const url = this.photoUrl();
-    if (url) {
-      URL.revokeObjectURL(url);
-    }
+    //Освобождаем все object URL — браузер держит Blob в памяти, пока ссылка не отозвана
+    this.photos().forEach((item) => URL.revokeObjectURL(item.url));
   }
 }

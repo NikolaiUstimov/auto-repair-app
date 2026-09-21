@@ -19,44 +19,75 @@
     color: var(--color-text);
   }
 
-  &__photo {
+  &__photos {
     display: flex;
     flex-direction: column;
-    align-items: center;
     row-gap: 12px;
   }
 
-  &__photo-img {
+  &__photos-title {
+    font-size: v.$font-size-base;
+    color: var(--color-text);
+  }
+
+  &__photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+  }
+
+  &__photo-item {
+    position: relative;
+    aspect-ratio: 1;
+  }
+
+  &__photo-thumb {
     width: 100%;
-    max-width: 400px;
-    aspect-ratio: 4 / 3;
+    height: 100%;
     object-fit: cover;
     border-radius: v.$border-radius-s;
     border: var(--border);
+    cursor: zoom-in;
+  }
+
+  &__photo-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: var(--color-text-inverse);
+    border-radius: 50%;
+    font-size: 12px;
+    line-height: 1;
     cursor: pointer;
   }
 
-  &__photo-placeholder {
-    width: 100%;
-    max-width: 400px;
-    aspect-ratio: 4 / 3;
+  &__photo-add {
+    aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--color-accent);
-    color: var(--color-text-inverse);
+    color: var(--color-text);
     border-radius: v.$border-radius-s;
     border: var(--border);
-  }
-
-  &__photo-upload {
-    padding: v.$padding-btn-medium;
-    background-color: var(--color-secondary);
-    color: var(--color-text-inverse);
-    border-radius: v.$border-radius-s;
-    cursor: pointer;
     font-size: v.$font-size-small;
     text-align: center;
+    cursor: pointer;
+
+    &--disabled {
+      opacity: 0.6;
+      cursor: progress;
+    }
+  }
+
+  &__photo-placeholder {
+    font-size: v.$font-size-small;
+    color: var(--color-text);
   }
 
   &__photo-error {

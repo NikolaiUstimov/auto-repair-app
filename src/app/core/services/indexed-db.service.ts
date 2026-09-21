@@ -10,7 +10,7 @@ export class IndexedDBService {
   private readonly DB_NAME = 'repair-db';
   private readonly STORE_NAME = 'repairs';
   private readonly PHOTOS_STORE_NAME = 'photos';
-  private readonly DB_VERSION = 2;
+  private readonly DB_VERSION = 4;
 
   constructor() {
     this.dbPromise = this.initDB();
@@ -38,10 +38,28 @@ export class IndexedDBService {
         if (!store.indexNames.contains('by-price')) {
           store.createIndex('by-price', 'price', { unique: false });
         }
-        //Новый стор для фото будет во 2-й версии базы данных
-        if (!db.objectStoreNames.contains(this.PHOTOS_STORE_NAME)) {
-          db.createObjectStore(this.PHOTOS_STORE_NAME, { keyPath: 'id' });
+
+        //Стор для фото (появился в версии 2)
+        const photosStore = db.objectStoreNames.contains(this.PHOTOS_STORE_NAME)
+          ? transaction.objectStore(this.PHOTOS_STORE_NAME)
+          : db.createObjectStore(this.PHOTOS_STORE_NAME, { keyPath: 'id' });
+
+        //Индекс по repairId (версия 3) — позволяет быстро получать все фото
+        //конкретной записи через getAllFromIndex, а не сканировать весь стор
+        if (photosStore.indexNames.contains('by-repair')) {
+          const existingIndex = photosStore.index('by-repair');
+          if (existingIndex.keyPath !== 'repairId') {
+            photosStore.deleteIndex('by-repair');
+            photosStore.createIndex('by-repair', 'repairId', { unique: false });
+          }
+        } else {
+          photosStore.createIndex('by-repair', 'repairId', { unique: false });
         }
+
+        //Новый стор для фото будет во 2-й версии базы данных
+        // if (!db.objectStoreNames.contains(this.PHOTOS_STORE_NAME)) {
+        //   db.createObjectStore(this.PHOTOS_STORE_NAME, { keyPath: 'id' });
+        // }
       },
       blocked() {
         console.warn('Подключение к базе данных заблокировано');
@@ -107,8 +125,8 @@ export class IndexedDBService {
     try {
       const db = await this.dbPromise;
       await db.delete(this.STORE_NAME, id);
-      //Также чистим стор с фото
-      await db.delete(this.PHOTOS_STORE_NAME, id);
+      //Также чистим все фото этой записи
+      await this.deletePhotosByRepairId(id);
     } catch (error) {
       console.error('Ошибка удаления записи', error);
       throw error;
@@ -126,15 +144,43 @@ export class IndexedDBService {
     }
   }
 
-  //Получение фото по id записи вместе с метаданными. Вернёт undefined, если фото не загружено
-  async getPhoto(id: string): Promise<RepairPhoto | undefined> {
+  //Получение ВСЕХ фото конкретной записи через индекс by-repair
+  async getPhotosByRepairId(repairId: string): Promise<RepairPhoto[]> {
     try {
       const db = await this.dbPromise;
-      return await db.get(this.PHOTOS_STORE_NAME, id);
+      return await db.getAllFromIndex(this.PHOTOS_STORE_NAME, 'by-repair', repairId);
     } catch (error) {
       console.error('Ошибка получения фото', error);
       throw error;
     }
+  }
+
+  //Удаление одного конкретного фото по его собственному id
+  async deletePhoto(photoId: string): Promise<void> {
+    try {
+      const db = await this.dbPromise;
+      await db.delete(this.PHOTOS_STORE_NAME, photoId);
+    } catch (error) {
+      console.error('Ошибка удаления фото', error);
+      throw error;
+    }
+  }
+
+  //Удаление ВСЕХ фото конкретной записи (используется при удалении самой записи).
+  //Курсор по индексу — эффективнее, чем сначала getAllFromIndex, а потом
+  //удалять каждое по отдельному вызову delete().
+  private async deletePhotosByRepairId(repairId: string): Promise<void> {
+    const db = await this.dbPromise;
+    const tx = db.transaction(this.PHOTOS_STORE_NAME, 'readwrite');
+    const index = tx.store.index('by-repair');
+
+    let cursor = await index.openCursor(IDBKeyRange.only(repairId));
+    while (cursor) {
+      await cursor.delete();
+      cursor = await cursor.continue();
+    }
+
+    await tx.done;
   }
 
   //Удаление всех записей БД

@@ -4,30 +4,59 @@
 
     <h2 class="repair-detail__title">{{ currentRepair.nameRepair }}</h2>
 
-    <div class="repair-detail__photo">
+    <div class="repair-detail__photos">
+      <h3 class="repair-detail__photos-title">Фотографии</h3>
+
       @if (isPhotoLoading()) {
         <div class="repair-detail__photo-placeholder">Загрузка фото...</div>
-      } @else if (photoUrl(); as url) {
-        <img class="repair-detail__photo-img" [src]="url" alt="Фото автомобиля" (click)="isLightboxOpen.set(true)" />
       } @else {
-        <div class="repair-detail__photo-placeholder">Фото не загружено!</div>
-      }
+        <div class="repair-detail__photo-grid">
+          @for (item of photos(); track item.photo.id) {
+            <div class="repair-detail__photo-item">
+              <img
+                class="repair-detail__photo-thumb"
+                [src]="item.url"
+                alt="Фото авто"
+                (click)="selectedPhotoUrl.set(item.url)"
+              >
+              <button
+                class="repair-detail__photo-remove"
+                type="button"
+                title="Удалить фото"
+                (click)="onDeletePhoto(item)"
+              >
+                ✕
+              </button>
+            </div>
+          }
 
-      <label class="repair-detail__photo-upload">
-        {{ photoUrl() ? 'Заменить фото' : 'Загрузить фото' }}
-        <input type="file" accept="image/*" (change)="onPhotoSelected($event)" hidden>
-      </label>
+          <label
+            class="repair-detail__photo-add"
+            [class.repair-detail__photo-add--disabled]="isPhotoUploading()"
+          >
+            {{ isPhotoUploading() ? 'Загрузка...' : '+ Добавить' }}
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              [disabled]="isPhotoUploading()"
+              (change)="onPhotosSelected($event)"
+              hidden
+            >
+          </label>
+        </div>
+      }
 
       @if (photoError()) {
         <p class="repair-detail__photo-error">{{ photoError() }}</p>
       }
     </div>
 
-    @if (isLightboxOpen() && photoUrl(); as url) {
+    @if (selectedPhotoUrl(); as url) {
       <app-lightbox
         [imageUrl]="url"
-        altText="Фото автомобиля"
-        (closed)="isLightboxOpen.set(false)"
+        altText="Фото авто"
+        (closed)="selectedPhotoUrl.set(null)"
       />
     }
 

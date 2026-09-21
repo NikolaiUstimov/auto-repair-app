@@ -11,8 +11,11 @@ export interface RepairType {
 }
 
 //Отдельный тип для создания записи с фотографией
+//id — собственный уникальный ключ каждого фото (не равен id записи, раз фото
+//теперь может быть несколько). repairId — связь с конкретной записью о ремонте.
 export interface RepairPhoto {
   id: string;
+  repairId: string;
   photo: Blob;
   mimeType: string; //MIME после сжатия: формат фото
   size: number; //размер Blob в байтах - для отображения "150 КБ"
@@ -34,5 +37,8 @@ export interface RepairDB extends DBSchema {
   photos: {
     key: string;
     value: RepairPhoto;
+    indexes: {
+      'by-repair': string;
+    };
   };
 }
